@@ -18,8 +18,20 @@ mongoose
     // console.log(err);
   });
 
+app.get("/listing/getListings", (req, res) => {
+  res.send("hello from /listing/getListings");
+});
+
+app.get("/listing/getListing", (req, res) => {
+  res.send("hello from /listing/getListing");
+});
+
+app.get("/listing/getUserListings", (req, res) => {
+  res.send("hello from /listing/getUserListings");
+});
+
 app.post("/listing/create", (req, res) => {
-  res.send("hello from listing");
+  res.send("hello from /listing/create");
 });
 
 app.listen(port, () => {
