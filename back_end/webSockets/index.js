@@ -19,14 +19,20 @@ wss.on("connection", ws => {
   ws.on("message", rawData => {
     const data = JSON.parse(rawData);
     switch (data.actionType) {
-      case "eventA":
+      case "newListing":
+        console.log("New Listing Created")
         // messages.splice(0, 0, {
         //   userName: data.userName,
         //   message: data.message
         // });
         // brodcast({ messages, actionType: "newMessage" });
         break;
-      case "eventB":
+      case "newInquiryMessage":
+        console.log("New Inquiry Message Sent")
+        // ws.send(JSON.stringify({ messages, actionType: "newMessage" }));
+        break;
+      case "imageProcessDone":
+        console.log("New Image Process Done")
         // ws.send(JSON.stringify({ messages, actionType: "newMessage" }));
         break;
       default:
