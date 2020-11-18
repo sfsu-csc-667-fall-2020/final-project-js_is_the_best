@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import rootReducer from './redux/reducers/rootReducer';
 import thunk from 'redux-thunk';
 import './App.css';
-
+import Home from './pages/Home'
 import {
   BrowserRouter,
   Switch,
@@ -21,6 +21,10 @@ ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
+      <Switch>
+        <Route path="/" component={Home}>
+        </Route>
+      </Switch>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>,
