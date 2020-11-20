@@ -18,7 +18,8 @@ passport.use(
           return done("user does not exist");
         } else {
           if (reqUser.password === password) {
-            return done(null, { ...reqUser, password: null });
+            reqUser.password = undefined;
+            return done(null, reqUser);
           } else {
             return done("incorrect password");
           }
@@ -50,7 +51,8 @@ passport.use(
             name: req.body.name
           });
           await newUser.save();
-          return done(null, { ...newUser, password: null });
+          newUser.password = undefined;
+          return done(null, newUser);
         }
       } catch (error) {
         return done("internal error");
@@ -73,20 +75,9 @@ passport.use(
       secretOrKey: "secret_jwt_key"
     },
     function(jwt_payload, done) {
-      //   console.log("reached here", jwt_payload.user);
+      console.log("reached here", jwt_payload);
       //   find user form the db using jwt_payload.user
       return done(null, jwt_payload.user);
-      // User.findOne({ id: jwt_payload.sub }, function(err, user) {
-      //   if (err) {
-      //     return done(err, false);
-      //   }
-      //   if (user) {
-      //     return done(null, user);
-      //   } else {
-      //     return done(null, false);
-      //     // or you could create a new account
-      //   }
-      // });
     }
   )
 );
