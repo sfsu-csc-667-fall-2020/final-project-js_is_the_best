@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
-const message = require("./message")
+const message = require("./message").schema
 
 const inquiry = new mongoose.Schema({
-  senderId: {type: Number, required: true},
-  listingId: {type: Number, required: true},
+  senderId: {type: String, required: true},
+  listingId: {type: String, required: true},
   messages: {type: [message]}
 })
 

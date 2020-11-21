@@ -116,6 +116,7 @@ body: {
 
 ```
 body: {
+  "listingId": string
   "message": string
 }
 ```

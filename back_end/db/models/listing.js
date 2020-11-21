@@ -7,7 +7,7 @@ const ListingSchema = new Schema({
   description: String,
   price: Number,
   datePosted: {type: Date, default: Date.now},
-  posterId: Number
+  posterId: String
 })
 
 // module.exports = {
