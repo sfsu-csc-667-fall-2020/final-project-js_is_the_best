@@ -87,18 +87,21 @@ input[type=number]{
 }
 
 .profile-image{
-  position: relative;
-  display: column;
-  float: left;
   margin-top: 25%;
   margin-left: 100%;
-  border:1px solid black;
 }
 
 .profile-info{
-  position: relative;
   margin-top: 10%;
-  display: column;
-  float: left;
-  font-size: 28px;
+  font-size: 24px;
+}
+
+.center-navbar {
+  width:30%;
+  margin-left: 35%;
+}
+
+.profile-margin{
+  margin-left: 200px;
+  margin-right: 200px;
 }

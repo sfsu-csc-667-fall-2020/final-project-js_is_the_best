@@ -11,26 +11,14 @@ const Navigationbar = ()=>{
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/postlisting">Post Listing</Nav.Link>
-                    <Nav>
                     <Nav.Link href="/profile">Profile</Nav.Link>
-                </Nav>
-                <Nav>
                     <Nav.Link href="/messages">Messages</Nav.Link>
                 </Nav>
-                </Nav>
-                <Nav className="mr-auto">
-                    <Form>
-                        <FormControl type="text" placeholder="Search for listings" className="mr-sm-2" required />
-                    </Form>
-                </Nav>
-                <Nav>
-                    <Nav.Link href="/login">Log in</Nav.Link>
-                </Nav>
-                <Button variant="outline-info">
-                <Nav>
-                    <Nav.Link href="/signup">Sign Up</Nav.Link>
-                </Nav>
-                </Button>
+                <Form inline>
+                    <FormControl type="text" placeholder="Search for listings" className="mr-sm-2" style={{marginTop:10}} />
+                    <Button variant="secondary" style={{marginRight:5}}  href="/login"> Log In </Button>
+                    <Button variant="outline-info"href="/signup"> Sign Up </Button>
+                </Form>
             </Navbar.Collapse>
         </Navbar>
 
