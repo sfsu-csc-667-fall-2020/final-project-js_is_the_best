@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
+import Navigationbar from '../../components/Navbar/Navigationbar';
 
 class Signup extends Component {
     
@@ -27,6 +28,8 @@ class Signup extends Component {
 
     render(){
         return(
+            <div>
+                <Navigationbar></Navigationbar>
         <div className="container-auth">
                 <h1 className="heading-auth">Sign Up</h1>
                 <Form onSubmit={this.handleSubmit}>
@@ -53,6 +56,7 @@ class Signup extends Component {
                     <br />
                     <p style={{textAlign:"center"}}> Already have an account? <a href="/login"><u> Log In here! </u></a></p>
                 </Form>
+            </div>
             </div>
     )
 }

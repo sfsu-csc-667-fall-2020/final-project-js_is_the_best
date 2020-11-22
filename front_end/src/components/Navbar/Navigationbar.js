@@ -24,8 +24,13 @@ const Navigationbar = ()=>{
                     </Form>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/login">Log in</Nav.Link>
                 </Nav>
+                <Button variant="outline-info">
+                <Nav>
+                    <Nav.Link href="/signup">Sign Up</Nav.Link>
+                </Nav>
+                </Button>
             </Navbar.Collapse>
         </Navbar>
 
