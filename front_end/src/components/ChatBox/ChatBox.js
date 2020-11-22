@@ -1,9 +1,11 @@
 import React from 'react'
-import '../css/ChatRoom.css'
+import './ChatBox.css'
+import Navigationbar from '../Navbar/Navigationbar';
 
-const ChatRoom = () =>{
+const MessageCenter = () =>{
     return(
         <>
+        <Navigationbar></Navigationbar>
         <div className="chat-container">
             <div className="chat-header">Youzer Naim</div>
             <form className="chat-form">
@@ -22,4 +24,4 @@ const ChatRoom = () =>{
     )
 }
 
-export default ChatRoom;
+export default MessageCenter;

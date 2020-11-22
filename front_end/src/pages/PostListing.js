@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import CurrencyInput from 'react-currency-input-field';
 import '../App.css';
+import Navigationbar from '../components/Navbar/Navigationbar';
 
 class PostListing  extends Component {
     
@@ -29,6 +30,7 @@ class PostListing  extends Component {
     render(){
         return (
         <div>
+            <Navigationbar></Navigationbar>
             <h1 className="heading-PostListing">Post Listing</h1>
             <div className="container-PostListing">
                 <br />

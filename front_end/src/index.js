@@ -18,6 +18,7 @@ import {
 } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
+import MessageCenter from './components/ChatBox/ChatBox';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Profile" component={Profile}></Route>
         <Route path="/PostListing" component={PostListing}></Route>
+        <Route path="/messages" component={MessageCenter}></Route>
       </Switch>
       </BrowserRouter>
     </React.StrictMode>

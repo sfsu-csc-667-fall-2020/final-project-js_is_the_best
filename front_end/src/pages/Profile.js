@@ -4,9 +4,11 @@ import '../App.css';
 import Figure from 'react-bootstrap/Figure'
 
 import { Row, Col } from 'react-bootstrap';
+import Navigationbar from '../components/Navbar/Navigationbar';
 
 const Profile = () =>{
-    return(
+    return(<div>
+        <Navigationbar></Navigationbar>
         <Row>
             <Col lg={5}>
                 <Figure>
@@ -23,7 +25,7 @@ const Profile = () =>{
                 </div>
             </Col>
         </Row>
-        
+        </div>
     )
 }
 
