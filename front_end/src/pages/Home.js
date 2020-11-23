@@ -1,5 +1,6 @@
 import React from 'react'
 import ListingCard from '../components/ListingCard'
+import Navigationbar from '../compontents/Navbar/Navigationbar'
 import './Home.css'
 
 const Listings = [{
@@ -37,6 +38,7 @@ const Listings = [{
 const Home = () => {
     return(
         <div class='Home'>
+            <Navigationbar />
             <ListingCard />
             <ListingCard />
             <ListingCard />

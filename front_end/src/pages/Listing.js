@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
+import Navigationbar from '../compontents/Navbar/Navigationbar'
 import './Listing.css'
 
 const SingleListing = {
@@ -12,6 +13,7 @@ const SingleListing = {
 const Listing = () => {
     return(
         <div class='ListingPage'>
+            <Navigationbar />
             {/* <blockquote class="imgur-embed-pub" lang="en" data-id="a/enrEWvh"  ><a href="//imgur.com/a/enrEWvh">dummy500pxx500pximg</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script> */}
             <img src={SingleListing.img} style={{float: 'left'}}/>
             <br></br>
