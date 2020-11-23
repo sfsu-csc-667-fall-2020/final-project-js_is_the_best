@@ -10,7 +10,7 @@ const SingleListing = {
 
 const ListingCard = () => {
     return(
-        <div>
+        <div class='ListingCard'>
             <Card>
                 <Card.Header as="h5">{SingleListing.title}</Card.Header>
                 <Card.Body>

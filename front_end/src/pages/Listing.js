@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
+import './Listing.css'
 
 const SingleListing = {
     img: 'https://imgur.com/a/enrEWvh',
@@ -10,7 +11,7 @@ const SingleListing = {
 
 const Listing = () => {
     return(
-        <div>
+        <div class='ListingPage'>
             {/* <blockquote class="imgur-embed-pub" lang="en" data-id="a/enrEWvh"  ><a href="//imgur.com/a/enrEWvh">dummy500pxx500pximg</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script> */}
             <img src={SingleListing.img} style={{float: 'left'}}/>
             <br></br>
