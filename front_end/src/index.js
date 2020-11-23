@@ -6,17 +6,11 @@ import * as serviceWorker from './serviceWorker';
 import rootReducer from './redux/reducers/rootReducer';
 import thunk from 'redux-thunk';
 import './App.css';
-<<<<<<< HEAD
-import Listing from './pages/Listing'
-import Home from './pages/Home'
-
-=======
 import Home from './pages/Home';
 import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 import PostListing from './pages/PostListing';
 import Profile from './pages/Profile';
->>>>>>> 9adec9ad022896615cc5b627e66249dc25fed263
 import {
   BrowserRouter,
   Switch,
@@ -33,15 +27,6 @@ ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
       <Switch>
-<<<<<<< HEAD
-          <Route path='/Listing'>
-            <Listing />
-          </Route>
-          <Route path='/Home'>
-            <Home />
-          </Route>
-        </Switch>
-=======
         <Route path="/" exact component={Home}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/Signup" component={Signup}></Route>
@@ -49,7 +34,6 @@ ReactDOM.render(
         <Route path="/PostListing" component={PostListing}></Route>
         <Route path="/messages" component={MessageCenter}></Route>
       </Switch>
->>>>>>> 9adec9ad022896615cc5b627e66249dc25fed263
       </BrowserRouter>
     </React.StrictMode>
   </Provider>,

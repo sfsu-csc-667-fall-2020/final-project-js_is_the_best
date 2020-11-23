@@ -1,6 +1,6 @@
 import React from 'react'
 import ListingCard from '../components/ListingCard'
-import Navigationbar from '../compontents/Navbar/Navigationbar'
+import Navigationbar from '../components/Navbar/Navigationbar'
 import './Home.css'
 
 const Listings = [{
