@@ -12,7 +12,6 @@ const Navigationbar = ()=>{
                 <Nav className="mr-auto">
                     <Nav.Link href="/postlisting">Post Listing</Nav.Link>
                     <Nav.Link href="/profile">Profile</Nav.Link>
-                    <Nav.Link href="/messages">Messages</Nav.Link>
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search for listings" className="mr-sm-2" style={{marginTop:10}} />

@@ -29,20 +29,20 @@ const Profile = () =>{
             <h3 style={{marginTop: "25px"}}>My Listings</h3>
                 <Row className="profile-margin">
                     <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> </ Figure>
-                    <Figure.Caption style={{textAlign:'center'}}> Title </Figure.Caption>
+                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
+                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
                     </Col>
                     <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> </ Figure>
-                    <Figure.Caption style={{textAlign:'center'}}> Title </Figure.Caption>
+                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
+                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
                     </Col>
                     <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> </ Figure>
-                    <Figure.Caption style={{textAlign:'center'}}> Title </Figure.Caption>
+                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
+                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
                     </Col>
                     <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> </ Figure>
-                    <Figure.Caption style={{textAlign:'center'}}> Title </Figure.Caption>
+                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
+                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
                     </Col>
                 </Row> 
         </div>

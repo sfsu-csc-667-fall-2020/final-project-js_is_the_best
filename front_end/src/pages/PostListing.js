@@ -30,7 +30,7 @@ class PostListing  extends Component {
     render(){
         return (
         <div>
-            <Navigationbar></Navigationbar>
+            <Navigationbar />
             <h1 className="heading-PostListing">Post Listing</h1>
             <div className="container-PostListing">
                 <br />

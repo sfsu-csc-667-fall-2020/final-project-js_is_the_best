@@ -1,7 +1,6 @@
-import React from 'react'
-import ListingCard from '../components/ListingCard'
-import Navigationbar from '../components/Navbar/Navigationbar'
-import './Home.css'
+import React from 'react';
+import ListingCard from '../components/ListingCard/ListingCard.js';
+import Navigationbar from '../components/Navbar/Navigationbar';
 
 const Listings = [{
     img: 'https://imgur.com/a/enrEWvh',
