@@ -27,7 +27,7 @@ class Login extends Component {
     render(){
         return (
             <div>
-                <Navigationbar></Navigationbar>
+                <Navigationbar />
             <div className="container-auth">
                 <h1 className="heading-auth">Log In</h1>
                 <br />

@@ -10,8 +10,8 @@ const SingleListing = {
 
 const ListingCard = () => {
     return(
-        <div class='ListingCard'>
-            <Card>
+        <div style={{maxWidth:'90%'}}>
+            <Card style={{marginLeft: '80px', marginRight: '80px'}}>
                 <Card.Header as="h5">{SingleListing.title}</Card.Header>
                 <Card.Body>
                 <img src={SingleListing.img} style={{float: 'left', display: 'flex'}}/>
@@ -21,6 +21,7 @@ const ListingCard = () => {
                     </Card.Text>
                 </Card.Body>
                 </Card>
+                <br />
         </div>
     );
 }

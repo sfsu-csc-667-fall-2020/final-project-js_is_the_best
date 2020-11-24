@@ -1,7 +1,6 @@
-import React from 'react'
-import ListingCard from '../components/ListingCard'
-import Navigationbar from '../components/Navbar/Navigationbar'
-import './Home.css'
+import React from 'react';
+import ListingCard from '../components/ListingCard/ListingCard.js';
+import Navigationbar from '../components/Navbar/Navigationbar';
 
 //const wsClient = new WebSocket('ws://localhost:5000')
 const Listings = [{
