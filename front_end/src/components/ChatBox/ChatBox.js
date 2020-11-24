@@ -1,16 +1,20 @@
 import React from 'react'
 import './ChatBox.css'
-import Navigationbar from '../Navbar/Navigationbar';
 
-const MessageCenter = () =>{
+const ChatBox = () =>{
+    const chatMessages ={
+
+    }
+    const handleSubmit=()=>{
+        console.log("Hello")
+    }
     return(
         <>
-        <Navigationbar></Navigationbar>
         <div className="chat-container">
             <div className="chat-header">Youzer Naim</div>
             <form className="chat-form">
                 <input className="input" type="text" placeholder="Send a message..."/>
-                <button className="sendMessageButton">Chat</button>
+                <button className="sendMessageButton" onSubmit={()=>handleSubmit}>Send</button>
             </form>
         </div>
         
@@ -24,4 +28,4 @@ const MessageCenter = () =>{
     )
 }
 
-export default MessageCenter;
+export default ChatBox;

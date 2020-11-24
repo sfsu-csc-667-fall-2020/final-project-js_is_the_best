@@ -3,6 +3,7 @@ import ListingCard from '../components/ListingCard'
 import Navigationbar from '../components/Navbar/Navigationbar'
 import './Home.css'
 
+//const wsClient = new WebSocket('ws://localhost:5000')
 const Listings = [{
     img: 'https://imgur.com/a/enrEWvh',
     title: 'Static Listing',

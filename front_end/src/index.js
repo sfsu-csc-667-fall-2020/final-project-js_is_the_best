@@ -18,7 +18,7 @@ import {
 } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import MessageCenter from './components/ChatBox/ChatBox';
+import MessageCenter from './pages/MessageCenter';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
