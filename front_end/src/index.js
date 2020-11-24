@@ -18,8 +18,9 @@ import {
 } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import MessageCenter from './pages/MessageCenter';
+import MessageCenter from './pages/Inquiry';
 import Listing from './pages/Listing';
+import Inquiry from './pages/Inquiry';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -35,6 +36,7 @@ ReactDOM.render(
         <Route path="/PostListing" component={PostListing}></Route>
         <Route path="/messages" component={MessageCenter}></Route>
         <Route path="/Listing" component={Listing}></Route>
+        <Route path="/Inquiry" component={Inquiry}></Route>
       </Switch>
       </BrowserRouter>
     </React.StrictMode>

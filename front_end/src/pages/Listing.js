@@ -20,7 +20,10 @@ const Listing = () => {
             <p>Title: {SingleListing.title}</p>
             <p>Price: {SingleListing.price}</p>
             <p>Description: {SingleListing.description}</p>
+            <a href="/Inquiry">           
             <Button variant='primary' size='lg' style={{display: 'block', margin: '0 auto'}}>Make Inquiry</Button>
+            </a>
+ 
         </div>
     </div>
     );

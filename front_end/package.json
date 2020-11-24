@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.3",
+    "mdbreact": "^4.27.0",
     "react": "^16.14.0",
     "react-bootstrap": "^1.4.0",
     "react-currency-input-field": "^2.7.0",
