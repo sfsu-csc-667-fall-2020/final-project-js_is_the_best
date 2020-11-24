@@ -19,6 +19,7 @@ import {
 
 import { Provider } from 'react-redux';
 import MessageCenter from './pages/MessageCenter';
+import Listing from './pages/Listing';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -33,6 +34,7 @@ ReactDOM.render(
         <Route path="/Profile" component={Profile}></Route>
         <Route path="/PostListing" component={PostListing}></Route>
         <Route path="/messages" component={MessageCenter}></Route>
+        <Route path="/Listing" component={Listing}></Route>
       </Switch>
       </BrowserRouter>
     </React.StrictMode>
