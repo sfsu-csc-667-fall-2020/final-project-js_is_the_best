@@ -17,9 +17,9 @@ const ListingCard = () => {
             </a>
                 <Card.Body>
                 <a href='/Listing'>
-                    <img src={SingleListing.img} style={{float: 'left', display: 'flex', height: '120px', width:'120px', marginRight: '10px'}}/>
+                    <img src={SingleListing.img} alt='listing_img' style={{float: 'left', display: 'flex', height: '120px', width:'120px', marginRight: '10px'}}/>
                 </a>
-                    <Card.Title>{SingleListing.price}</Card.Title>
+                <Card.Title>{SingleListing.price}</Card.Title>
                     <Card.Text>
                         {SingleListing.description}
                     </Card.Text>

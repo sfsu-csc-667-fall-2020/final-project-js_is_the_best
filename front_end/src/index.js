@@ -11,16 +11,16 @@ import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 import PostListing from './pages/PostListing';
 import Profile from './pages/Profile';
+import Listing from './pages/Listing';
+import { Provider } from 'react-redux';
+import MessageCenter from './pages/Inquiry';
+import Inquiry from './pages/Inquiry';
+
 import {
   BrowserRouter,
   Switch,
   Route,
 } from 'react-router-dom';
-
-import { Provider } from 'react-redux';
-import MessageCenter from './pages/Inquiry';
-import Listing from './pages/Listing';
-import Inquiry from './pages/Inquiry';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -29,14 +29,14 @@ ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home}></Route>
-        <Route path="/Login" component={Login}></Route>
-        <Route path="/Signup" component={Signup}></Route>
-        <Route path="/Profile" component={Profile}></Route>
-        <Route path="/PostListing" component={PostListing}></Route>
-        <Route path="/messages" component={MessageCenter}></Route>
-        <Route path="/Listing" component={Listing}></Route>
-        <Route path="/Inquiry" component={Inquiry}></Route>
+        <Route path="/" exact component={Home} />
+        <Route path="/Login" component={Login} />
+        <Route path="/Signup" component={Signup} />
+        <Route path="/Profile" component={Profile} />
+        <Route path="/PostListing" component={PostListing} />
+        <Route path="/Messages" component={MessageCenter} />
+        <Route path="/Listing" component={Listing} />
+        <Route path="/Inquiry" component={Inquiry} />
       </Switch>
       </BrowserRouter>
     </React.StrictMode>

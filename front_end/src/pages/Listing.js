@@ -13,9 +13,10 @@ const Listing = () => {
     return(
         <div>
          <Navigationbar />
+         <br />
+    <a href='/' style={{fontSize: '18px', marginLeft:'30px'}}><u> {"<"} Back to Listings</u></a>
          <div style={{margin:'5%'}}>
-            {/* <blockquote class="imgur-embed-pub" lang="en" data-id="a/enrEWvh"  ><a href="//imgur.com/a/enrEWvh">dummy500pxx500pximg</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script> */}
-            <img src={SingleListing.img} style={{float: 'left', display: 'flex', height: '200px', width:'200px', marginRight: '10px', marginTop: '10px', marginBottom: '10px'}}/>
+            <img src={SingleListing.img} alt='listing_img' style={{float: 'left', display: 'flex', height: '200px', width:'200px', marginRight: '10px', marginTop: '10px', marginBottom: '10px'}}/>
             <br></br>
             <p>Title: {SingleListing.title}</p>
             <p>Price: {SingleListing.price}</p>
@@ -23,9 +24,8 @@ const Listing = () => {
             <a href="/Inquiry">           
             <Button variant='primary' size='lg' style={{display: 'block', margin: '0 auto'}}>Make Inquiry</Button>
             </a>
- 
         </div>
-    </div>
+        </div>
     );
 }
 
