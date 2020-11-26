@@ -10,6 +10,7 @@
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "listings": [
       {
@@ -38,6 +39,7 @@ query params - id: int
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "listing":
       {
@@ -61,6 +63,7 @@ query params - id: int
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "listings": [
       {
@@ -94,6 +97,7 @@ body: {
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "listing":
       {
@@ -126,6 +130,7 @@ body: {
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "inquiry" {
       "inquiryId": int,
@@ -151,6 +156,7 @@ body: {
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "inquiries": [
       {
@@ -188,6 +194,7 @@ body: {
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "user" {
       "userId": int,
@@ -214,6 +221,7 @@ body: {
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "user" {
       "userId": int,
@@ -251,6 +259,7 @@ body: {
 ```
 {
   "success": boolean,
+  "message": string (only sent if error),
   "data": {
     "user" {
       "userId": int,
@@ -258,5 +267,60 @@ body: {
       "email" string
     }
   }
+}
+```
+
+### WEBSOCKETS
+
+#### ws://localhost:5000 (actionType="newListing")
+
+- res from listener when new listing is posted:
+  
+```
+data = {
+  "listingCreated": boolean,
+  "listing":
+      {
+        "listingId": int,
+        "imageUrl": string,
+        "title": string,
+        "description": string,
+        "price": int,
+        "posterId": int
+      }
+}
+```
+
+#### ws://localhost:5000 (actionType="newInquiryMessage")
+
+- res from listener when new inquiry has been sent for a listing of theirs (most recent message in list will be specific message that was just received):
+  
+```
+data = {
+  "inquiryReceived": boolean,
+  "inquiry" {
+      "inquiryId": int,
+      "senderId": int,
+      "listingId": int,
+      "messages": [
+        {
+          "senderId": int,
+          "body": string
+        }
+      ]
+    }
+}
+```
+
+#### ws://localhost:5000 (actionType="imageProcessDone")
+
+- res from listener when an image has finished being resized and uploaded to aws (it is now accessible via its url):
+  
+```
+data = {
+  "imageProcessed": boolean,
+  "image" {
+      "url": string,
+    }
 }
 ```
