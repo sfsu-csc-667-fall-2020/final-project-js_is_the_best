@@ -1,4 +1,6 @@
 const WebSocket = require("ws");
+const redis = require("redis");
+const redisClient = redis.createClient();
 
 const wss = new WebSocket.Server({ port: 5000 });
 
@@ -9,6 +11,18 @@ const brodcast = data => {
   });
 };
 
+redisClient.on("message", (channel, message) => {
+  switch (channel) {
+    case "newInquiryMessage":
+      break;
+    default:
+      break;
+  }
+  // console.log("came here", message);
+});
+
+redisClient.subscribe(["newInquiryMessage"]);
+
 wss.on("connection", ws => {
   console.log("client connected");
 
@@ -18,26 +32,5 @@ wss.on("connection", ws => {
 
   ws.on("message", rawData => {
     const data = JSON.parse(rawData);
-    switch (data.actionType) {
-      case "newListing":
-        console.log("New Listing Created")
-        // messages.splice(0, 0, {
-        //   userName: data.userName,
-        //   message: data.message
-        // });
-        // brodcast({ messages, actionType: "newMessage" });
-        break;
-      case "newInquiryMessage":
-        console.log("New Inquiry Message Sent")
-        // ws.send(JSON.stringify({ messages, actionType: "newMessage" }));
-        break;
-      case "imageProcessDone":
-        console.log("New Image Process Done")
-        // ws.send(JSON.stringify({ messages, actionType: "newMessage" }));
-        break;
-      default:
-        console.log("unknown type");
-        break;
-    }
   });
 });
