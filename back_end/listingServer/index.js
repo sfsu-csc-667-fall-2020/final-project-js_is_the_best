@@ -3,12 +3,33 @@ const passport = require("../lib/passport/index");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const Listing = require("../db/models/listing");
+const morgan = require("morgan");
+
+const redis = require("redis");
+const redisClient = redis.createClient();
+
+const KafkaProducer = require("../kafka/KafkaProducer");
+const producer = new KafkaProducer("imageResize");
+producer.connect(() => {
+  console.log("kafka connected");
+});
+
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: "./back_end/imageUploads",
+  filename: function(req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
 
 const app = express();
 const port = 3003;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 const mongoose = require("mongoose");
 mongoose
@@ -40,9 +61,9 @@ app.get("/listing/getListings", (req, res) => {
     });
 });
 
-app.get("/listing/getListing/:id", (req, res) => {
+app.post("/listing/getListing", (req, res) => {
   Listing.findOne({
-    _id: req.params.id
+    _id: req.body.listingId
   })
     .then(listing => {
       return res.send({
@@ -58,7 +79,7 @@ app.get("/listing/getListing/:id", (req, res) => {
 });
 
 app.post(
-  "/listing/getUserListings/",
+  "/listing/getUserListings",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Listing.find({
@@ -81,7 +102,16 @@ app.post(
 app.post(
   "/listing/create",
   passport.authenticate("jwt", { session: false }),
+  upload.single("imageFile"),
   (req, res) => {
+    if (!req.file) {
+      return res.send({
+        success: false,
+        message: "Image missing"
+      });
+    }
+    producer.send(req.file);
+
     //return res.send("hello from /listing/create");
 
     // the image would be stored in uploads
@@ -95,12 +125,13 @@ app.post(
       posterId: req.user._id
     });
 
-    newListing.save((err, listing) => {
+    newListing.save(async (err, listing) => {
       if (err) {
         return res.send({
           success: false
         });
       } else {
+        await redisClient.publish("newListing", JSON.stringify(newListing));
         return res.send({
           success: true,
           listing: listing

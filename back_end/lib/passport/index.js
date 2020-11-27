@@ -75,7 +75,6 @@ passport.use(
       secretOrKey: "secret_jwt_key"
     },
     function(jwt_payload, done) {
-      console.log("reached here", jwt_payload);
       //   find user form the db using jwt_payload.user
       return done(null, jwt_payload.user);
     }
