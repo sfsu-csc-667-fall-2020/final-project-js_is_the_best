@@ -14,6 +14,14 @@ const brodcast = data => {
 redisClient.on("message", (channel, message) => {
   switch (channel) {
     case "newInquiryMessage":
+      //todo: broadcast proper message
+      // brodcast({ type: "newInquiryMessage" });
+      break;
+    case "newListing":
+      brodcast({ type: "newListing", listing: JSON.parse(message) });
+      break;
+    case "ImageProcessDone":
+      brodcast({ type: "ImageProcessDone", listingId: message });
       break;
     default:
       break;
@@ -21,7 +29,7 @@ redisClient.on("message", (channel, message) => {
   // console.log("came here", message);
 });
 
-redisClient.subscribe(["newInquiryMessage"]);
+redisClient.subscribe(["newInquiryMessage", "newListing", "ImageProcessDone"]);
 
 wss.on("connection", ws => {
   console.log("client connected");

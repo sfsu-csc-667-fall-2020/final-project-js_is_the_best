@@ -7,6 +7,9 @@ aws.config.loadFromPath("./lib/aws/config.json");
 aws.config.update({ region: "us-west-1" });
 const awsS3 = require("../lib/aws/index");
 
+const redis = require("redis");
+const redisClient = redis.createClient();
+
 const KafkaConsumer = require("../kafka/KafkaConsumer");
 const consumer = new KafkaConsumer(["imageResize"]);
 
@@ -33,7 +36,7 @@ consumer.on("message", async message => {
 
         //get current contents in our s3 bucket
         let contents = await awsS3.getS3files("csc667-final", "img/");
-        console.log(contents); // to see what are the current contents of S3 bucket
+        // console.log(contents); // to see what are the current contents of S3 bucket
 
         //store first file on bucket
         let fileName = "img/" + (contents.length + 1) + "_100resize" + ".jpg";
@@ -70,6 +73,8 @@ consumer.on("message", async message => {
         await fs.unlinkSync("./processedImages/500resize.jpg");
 
         console.log("done upload");
+
+        await redisClient.publish("ImageProcessDone", listingId);
 
         // TODO: send redis publish
       } catch (err) {
