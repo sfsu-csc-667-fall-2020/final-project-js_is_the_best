@@ -1,5 +1,12 @@
 var sharp = require("sharp");
 const fs = require("fs");
+
+const aws = require("aws-sdk");
+aws.config.loadFromPath("../lib/aws/config.json");
+aws.config.update({ region: "us-west-1" });
+
+const awsS3 = require("../lib/aws/index");
+
 const KafkaConsumer = require("../kafka/KafkaConsumer");
 const consumer = new KafkaConsumer(["imageResize"]);
 
@@ -9,41 +16,37 @@ consumer.on("message", async message => {
       let file;
       try {
         file = JSON.parse(message.value);
-        let fileExtension = "." + file.filename.split(".").pop();
 
-        // fs.readFile("./imageUploads/1015478_1.jpg", async function(
-        //   error,
-        //   filedata
-        // ) {
-        //   console.log("error", error);
-        //   console.log("filedata", filedata);
-        // });
-
-        // const contents = fs.readFileSync(
-        //   "back_end/imageProcessorServer/1015478_1.jpg",
-        //   {
-        //     encoding: "base64"
-        //   }
-        // );
+        // creating temp files for storing resized images
         fs.openSync("./processedImages/100resize.jpg", "w");
+        fs.openSync("./processedImages/500resize.jpg", "w");
 
-        let newFileInfo = await sharp("./imageUploads/1015478_1.jpg")
+        //storing resized images
+        let new100FileInfo = await sharp("./imageUploads/1015478_1.jpg")
           .resize({ height: 100, width: 100 })
           .toFile("./processedImages/100resize.jpg");
-        console.log(newFileInfo);
+        let new500FileInfo = await sharp("./imageUploads/1015478_1.jpg")
+          .resize({ height: 500, width: 500 })
+          .toFile("./processedImages/500resize.jpg");
 
-        // clipper(file.path, function() {
-        //   this.resize(100, 100).toFile(
-        //     // "./processedImages/100resize" + fileExtension
-        //     "./processedImages/100resize",
-        //     () => console.log("done")
-        //   );
-        // });
-        // clipper(file.path, function() {
-        //   this.resize(500, 500).toFile(
-        //     "./processedImages/500resize" + fileExtension
-        //   );
-        // });
+        //get current contents in our s3 bucket
+        let contents = await awsS3.getS3files("csc648-string", "img/");
+
+        //store first file on bucket
+        let fileName = "img/" + (contents.length + 1) + "_100resize" + ".jpg";
+        let fileData = await awsS3.getFileData(
+          "./processedImages/100resize.jpg"
+        );
+        await awsS3.addS3file("csc667-final", fileName, fileData);
+        const imgUrl1 =
+          "https://csc648-string.s3-us-west-1.amazonaws.com/" + fileName;
+
+        //store second file on bucket
+        fileName = "img/" + (contents.length + 1) + "_500resize" + ".jpg";
+        fileData = await awsS3.getFileData("./processedImages/500resize.jpg");
+        await awsS3.addS3file("csc667-final", fileName, fileData);
+        const imgUrl2 =
+          "https://csc648-string.s3-us-west-1.amazonaws.com/" + fileName;
       } catch (err) {
         console.log(err);
         break;

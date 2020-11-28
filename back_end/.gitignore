@@ -1,3 +1,4 @@
 node_modules
 /imageUploads/
 /processedImages/
+/lib/aws/config.json
