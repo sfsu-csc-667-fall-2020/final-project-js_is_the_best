@@ -10,7 +10,6 @@ consumer.on("message", async message => {
       try {
         file = JSON.parse(message.value);
         let fileExtension = "." + file.filename.split(".").pop();
-        console.log(file.path);
 
         // fs.readFile("./imageUploads/1015478_1.jpg", async function(
         //   error,
@@ -26,14 +25,11 @@ consumer.on("message", async message => {
         //     encoding: "base64"
         //   }
         // );
-        // fs.open("./processedImages/100resize", "w", function(err, file) {
-        //   if (err) throw err;
-        //   console.log("Saved!");
-        // });
+        fs.openSync("./processedImages/100resize.jpg", "w");
 
         let newFileInfo = await sharp("./imageUploads/1015478_1.jpg")
           .resize({ height: 100, width: 100 })
-          .toFile("./processedImages/100resize");
+          .toFile("./processedImages/100resize.jpg");
         console.log(newFileInfo);
 
         // clipper(file.path, function() {
