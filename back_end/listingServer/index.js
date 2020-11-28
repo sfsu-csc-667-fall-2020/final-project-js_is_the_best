@@ -125,7 +125,7 @@ app.post(
         });
       } else {
         try {
-          await producer.send(req.file);
+          await producer.send({ file: req.file, listingId: newListing._id });
           await redisClient.publish("newListing", JSON.stringify(newListing));
         } catch (error) {
           console.log(error);

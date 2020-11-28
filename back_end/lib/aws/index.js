@@ -2,9 +2,9 @@ const aws = require("aws-sdk");
 const s3 = new aws.S3({ apiVersion: "2006-03-01" });
 const fs = require("fs");
 
-const getFileData = file => {
+const getFileData = filePath => {
   return new Promise(async (resolve, reject) => {
-    fs.readFile(file.path, async function(error, filedata) {
+    fs.readFile(filePath, async function(error, filedata) {
       if (error) {
         reject(error.toString());
       } else {
@@ -14,11 +14,11 @@ const getFileData = file => {
   });
 };
 
-const clearFile = file => {
+const clearFile = filePath => {
   return new Promise(async (resolve, reject) => {
-    fs.unlink(file.path, error => {
+    fs.unlink(filePath, error => {
       if (error) {
-        reject(file.path);
+        reject(filePath);
       } else {
         resolve();
       }

@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const ListingSchema = new Schema({
-  imageUrl: String,
+  image500Url: String, // to store 500x500 img url
+  image100Url: String,// to store 100x100 img url
   title: {type: String, required: true},
   description: String,
   price: Number,
