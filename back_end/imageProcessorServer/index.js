@@ -1,6 +1,7 @@
 const sharp = require("sharp");
 const fs = require("fs");
-const listing = require("../db/models/listing");
+const Listing = require("../db/models/listing");
+const { connectMongoDb } = require("../db/connectDb");
 
 const aws = require("aws-sdk");
 aws.config.loadFromPath("./lib/aws/config.json");
@@ -12,6 +13,8 @@ const redisClient = redis.createClient();
 
 const KafkaConsumer = require("../kafka/KafkaConsumer");
 const consumer = new KafkaConsumer(["imageResize"]);
+
+connectMongoDb("Team5");
 
 consumer.on("message", async message => {
   switch (message.topic) {
@@ -36,45 +39,42 @@ consumer.on("message", async message => {
 
         //get current contents in our s3 bucket
         let contents = await awsS3.getS3files("csc667-final", "img/");
-        console.log(contents); // to see what are the current contents of S3 bucket
+        // console.log(contents); // to see what are the current contents of S3 bucket
 
         //store first file on bucket
         let fileName = "img/" + (contents.length + 1) + "_100resize" + ".jpg";
         let fileData = await awsS3.getFileData(
           "./processedImages/100resize.jpg"
         );
-        await awsS3.addS3file("csc667-final", fileName, fileData);
+        // await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl1 =
           "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
         //store second file on bucket
         fileName = "img/" + (contents.length + 1) + "_500resize" + ".jpg";
         fileData = await awsS3.getFileData("./processedImages/500resize.jpg");
-        await awsS3.addS3file("csc667-final", fileName, fileData);
+        // await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl2 =
           "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
-        listing
-          .findOne({ _id: listingId })
-          .then(listin => {
-            console.log("came here");
-            console.log(listin);
-            listin.image100Url = imgUrl1;
-            listin.image500Url = imgUrl2;
-            listin.save();
-          })
-          .catch(err => {
-            console.log(err);
-          });
-        // TODO: problem, it is not actually updating the actual listing object
 
-        await fs.unlinkSync("./imageUploads/" + file.filename);
-        await fs.unlinkSync("./processedImages/100resize.jpg");
-        await fs.unlinkSync("./processedImages/500resize.jpg");
+        // update listing to contain urls
+        let listing
+        const res = await Listing.updateOne({_id: listingId}, {image100Url: imgUrl1, image500Url: imgUrl2})
+        if(res.nModified === 1) {
+          listing = await Listing.findById(listingId)
+          console.log(listing)
+        } else {
+          listing = {success: false, message: 'failed updating listing'}
+        }
+
+        fs.unlinkSync("./imageUploads/" + file.filename);
+        fs.unlinkSync("./processedImages/100resize.jpg");
+        fs.unlinkSync("./processedImages/500resize.jpg");
 
         console.log("done upload");
 
-        await redisClient.publish("ImageProcessDone", listingId);
+        redisClient.publish("ImageProcessDone", listing);
       } catch (err) {
         console.log(err);
         break;
