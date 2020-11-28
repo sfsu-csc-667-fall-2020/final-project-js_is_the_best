@@ -14,14 +14,14 @@ const brodcast = data => {
 redisClient.on("message", (channel, message) => {
   switch (channel) {
     case "newInquiryMessage":
-      //todo: broadcast proper message
+      //TODO: broadcast proper message
       // brodcast({ type: "newInquiryMessage" });
       break;
     case "newListing":
       brodcast({ type: "newListing", listing: JSON.parse(message) });
       break;
     case "ImageProcessDone":
-      brodcast({ type: "ImageProcessDone", listingId: message });
+      brodcast({ type: "ImageProcessDone", listingId: message }); // TODO: also pass back the img url created
       break;
     default:
       break;

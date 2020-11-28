@@ -1,4 +1,4 @@
-var sharp = require("sharp");
+const sharp = require("sharp");
 const fs = require("fs");
 const listing = require("../db/models/listing");
 
@@ -36,7 +36,7 @@ consumer.on("message", async message => {
 
         //get current contents in our s3 bucket
         let contents = await awsS3.getS3files("csc667-final", "img/");
-        // console.log(contents); // to see what are the current contents of S3 bucket
+        console.log(contents); // to see what are the current contents of S3 bucket
 
         //store first file on bucket
         let fileName = "img/" + (contents.length + 1) + "_100resize" + ".jpg";
@@ -45,14 +45,14 @@ consumer.on("message", async message => {
         );
         await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl1 =
-          "https://csc648-string.s3-us-west-1.amazonaws.com/" + fileName;
+          "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
         //store second file on bucket
         fileName = "img/" + (contents.length + 1) + "_500resize" + ".jpg";
         fileData = await awsS3.getFileData("./processedImages/500resize.jpg");
         await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl2 =
-          "https://csc648-string.s3-us-west-1.amazonaws.com/" + fileName;
+          "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
         listing
           .findOne({ _id: listingId })
@@ -68,15 +68,13 @@ consumer.on("message", async message => {
           });
         // TODO: problem, it is not actually updating the actual listing object
 
-        await fs.unlinkSync("./imageUploads/" + file.filename); //TODO
+        await fs.unlinkSync("./imageUploads/" + file.filename);
         await fs.unlinkSync("./processedImages/100resize.jpg");
         await fs.unlinkSync("./processedImages/500resize.jpg");
 
         console.log("done upload");
 
         await redisClient.publish("ImageProcessDone", listingId);
-
-        // TODO: send redis publish
       } catch (err) {
         console.log(err);
         break;

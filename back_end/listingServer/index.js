@@ -16,7 +16,7 @@ producer.connect(() => {
 
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: "./back_end/imageUploads",
+  destination: "./imageUploads",
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
