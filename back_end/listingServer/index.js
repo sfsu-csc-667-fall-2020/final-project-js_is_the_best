@@ -110,13 +110,6 @@ app.post(
         message: "Image missing"
       });
     }
-    producer.send(req.file);
-
-    //return res.send("hello from /listing/create");
-
-    // the image would be stored in uploads
-    // req.file
-    // add a new khafka.publish with message: req.file
 
     const newListing = new Listing({
       title: req.body.title,
@@ -131,7 +124,12 @@ app.post(
           success: false
         });
       } else {
-        await redisClient.publish("newListing", JSON.stringify(newListing));
+        try {
+          await producer.send(req.file);
+          await redisClient.publish("newListing", JSON.stringify(newListing));
+        } catch (error) {
+          console.log(error);
+        }
         return res.send({
           success: true,
           listing: listing
