@@ -41,7 +41,6 @@ class PostListing  extends Component {
                             <Form.Control type="title" placeholder="Enter title" name="title" value={this.state.title} onChange={this.handleChange}/>
                         </Col>
                     </Form.Group>
-
                     <Form.Group as={Row} controlId="formHorizontalText">
                         <Form.Label column sm={2}> <b>Description</b> </Form.Label>
                         <Col lg={10}>
