@@ -11,22 +11,13 @@ const Profile = () =>{
     return(
     <div>
         <Navigationbar />
-        <Row>
-            <Col lg={5}>
-                <Figure>
-                    <Figure.Image className="profile-image" width={200} height={200} roundedCircle alt="profile_photo" src="./placeholder-image.jpg" />
-                </Figure>
-            </Col >
-            <Col lg={7}>
-                <div className="profile-info">
-                <label>Name </label>
-                <br />
-                <label>Email</label>
-                <br />
-                <label>Member Since</label>
-                </div>
-            </Col>
-        </Row>
+        <div className="profile-margin">
+            <div className="profile-info">
+            <label>Name </label>
+            <br />
+            <label>Email</label>
+            </div>
+        </div>
         <div className="profile-margin">
             <h3 style={{marginTop: "25px"}}>My Listings</h3>
                 <Row className="profile-margin">
