@@ -7,28 +7,26 @@ import Navigationbar from '../../components/Navbar/Navigationbar';
 import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 
-class Login extends Component {
-   
-    state = {
+const Login = ()=> {
+    //grabs info that user signed up with from redux store
+    const [user,setUser] = React.useState({
         email: '',
         password: '',
-    }
+    });
 
-    handleChange = (e) => {
-        this.setState({
+    const handleChange = (e) => {
+        setUser({
             [e.target.name]: e.target.value
         });
-        console.log(this);
     }
     
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
     }
 
-    login = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        axios.post('Auth/Login', this.state)
+        axios.post('/login', user)
         .then(response => {
             if(response.data){
                 this.props.history.push('/Profile');
@@ -39,23 +37,23 @@ class Login extends Component {
         }); 
     }
 
-    render(){
+{
         return (
             <div>
                 <Navigationbar />
             <div className="container-auth">
                 <h1 className="heading-auth">Log In</h1>
                 <br />
-                <Form onSubmit={this.handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleChange} required/>
+                        <Form.Control type="email" placeholder="Enter email" name="email" value={user.email} onChange={handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} required/>
+                        <Form.Control type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} required/>
                     </Form.Group>
-                    <Button block size="lg" variant="primary" onClick={this.login}> Log In </Button>
+                    <Button block size="lg" variant="primary" onClick={handleLogin}> Log In </Button>
                     <p className="forgot-password text-right"> <a href="/">Forgot password?</a></p>
                 </Form>
             </div>
