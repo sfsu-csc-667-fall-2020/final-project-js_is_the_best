@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
+import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 
 function validate(username, email, password, confirmPassword) {
@@ -104,6 +105,7 @@ class Signup extends Component {
                     <p style={{textAlign:"center"}}> Already have an account? <a href="/login"><u> Log In here! </u></a></p>
                 </Form>
             </div>
+            <Footer />
             </div>
     )
 }

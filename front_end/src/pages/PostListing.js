@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import CurrencyInput from 'react-currency-input-field';
+import Footer from '../components/Footer/Footer';
 import '../App.css';
 import Navigationbar from '../components/Navbar/Navigationbar';
 
@@ -68,6 +69,7 @@ class PostListing  extends Component {
                     <Button className="post-button" size="lg" variant="dark" onClick={this.handleSubmit}>Post</Button>
                 </Form>
             </div>
+            <Footer />
         </div>
         )
     }

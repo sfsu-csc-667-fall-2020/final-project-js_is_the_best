@@ -5,9 +5,11 @@ import Figure from 'react-bootstrap/Figure';
 import FigureCaption from 'react-bootstrap/FigureCaption'
 import { Row, Col } from 'react-bootstrap';
 import Navigationbar from '../components/Navbar/Navigationbar';
+import Footer from '../components/Footer/Footer';
 
 const Profile = () =>{
-    return(<div>
+    return(
+    <div>
         <Navigationbar />
         <Row>
             <Col lg={5}>
@@ -46,6 +48,7 @@ const Profile = () =>{
                     </Col>
                 </Row> 
         </div>
+        <Footer />
         </div>
     )
 }

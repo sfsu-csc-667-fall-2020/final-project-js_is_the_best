@@ -1,6 +1,7 @@
 import React from 'react';
 import ListingCard from '../components/ListingCard/ListingCard.js';
 import Navigationbar from '../components/Navbar/Navigationbar';
+import Footer from '../components/Footer/Footer';
 
 //const wsClient = new WebSocket('ws://localhost:5000')
 const Listings = [{
@@ -43,6 +44,7 @@ const Home = () => {
             <ListingCard />
             <ListingCard />
             <ListingCard />
+            <Footer />
         </div>
     );
 }

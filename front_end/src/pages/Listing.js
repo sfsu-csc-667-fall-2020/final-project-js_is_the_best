@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 import Navigationbar from '../components/Navbar/Navigationbar';
+import Footer from '../components/Footer/Footer';
 import {useSelector} from 'react-redux';
 
 const SingleListing = {
@@ -36,6 +37,7 @@ const Listing = () => {
             </a>                
             )}
         </div>
+        <Footer />
         </div>
     );
 }

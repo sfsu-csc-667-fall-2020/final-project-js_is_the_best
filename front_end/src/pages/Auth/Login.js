@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
+import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 
 class Login extends Component {
@@ -58,6 +59,7 @@ class Login extends Component {
                     <p className="forgot-password text-right"> <a href="/">Forgot password?</a></p>
                 </Form>
             </div>
+            <Footer />
             </div>
         )
     }

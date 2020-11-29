@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { MDBCard, MDBCardBody, MDBRow, MDBListGroup, MDBListGroupItem, MDBBadge, MDBIcon} from "mdbreact";
 import Button from 'react-bootstrap/Button';
 import Navigationbar from '../components/Navbar/Navigationbar';
+import Footer from '../components/Footer/Footer';
 import "../App.css";
 
 class Inquiry extends Component {
@@ -100,6 +101,7 @@ class Inquiry extends Component {
             </MDBListGroup>
           </MDBCardBody>
         </MDBCard>
+        <Footer />
       </div>
     );
   }

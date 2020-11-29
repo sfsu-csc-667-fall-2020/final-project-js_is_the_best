@@ -136,3 +136,10 @@ input[type=number]{
   height: 510px;
   padding-bottom: 15px;
 }
+
+.footer{
+  position:fixed; 
+  left:0px; 
+  bottom:0px; 
+  width:100%; 
+}
