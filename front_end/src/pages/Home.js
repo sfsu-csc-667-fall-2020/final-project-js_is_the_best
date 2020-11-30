@@ -16,7 +16,7 @@ const Listings = [{
     img: './placeholder-image.jpg',
     title: 'Static Listing',
     price: '$6.99',
-    description: 'Lorem ipsum diet eros venenatis. et feugiat arcu vestibulum sit amet. Aliquam varius, erat ac mollis imperdiet, purus mauris pharetra arcu, a aliquet eros elit iaculis aPraesent viverra pellentesque erat ac lacinia. Morbi gravida metus nec placerat pellentesque.',
+    description: 'purus mauris pharetra arcu, a aliquet eros elit iaculis aPraesent viverra pellentesque erat ac lacinia. Morbi gravida metus nec placerat pellentesque.',
 },
 {
     img: './placeholder-image.jpg',
@@ -49,7 +49,9 @@ const Home = () => {
             {!isLoggedIn &&(
             <NavBar_LogOut />                
             )}
-            
+            <div style={{fontSize:'35px', textAlign:'center', marginTop:'3%', marginBottom: '3%'}}>
+                <u>Available Listings </u>
+            </div>
             <ListingCard />
             <ListingCard />
             <ListingCard />
