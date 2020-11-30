@@ -1,12 +1,14 @@
 import React from 'react'
 import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap'
-
+import {useDispatch} from 'react-redux'
+import {setIsLoggedIn} from '../../redux/actions/userActions'
 
 const Navigationbar = ()=>{
     //needs work!!! should set isLoggedIn to false in the redux store
-    const [loggedIn, setLoggedIn] = React.useState(false);
+    // const [loggedIn, setLoggedIn] = React.useState(false);
+    const dispatch = useDispatch();
     const handleLogout = e => {
-      setLoggedIn(!loggedIn);
+      dispatch(setIsLoggedIn(false));
     };
 
     return(

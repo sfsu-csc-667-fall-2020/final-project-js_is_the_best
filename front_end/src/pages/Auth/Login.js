@@ -6,11 +6,13 @@ import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
 import NavBar_LogOut from '../../components/Navbar/NavBar_LogOut';
 import Footer from '../../components/Footer/Footer';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { setIsLoggedIn } from '../../redux/actions/userActions';
 
 const Login = ()=> {
+    const dispatch = useDispatch();
     //grabs info that user signed up with from redux store
     const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
     
@@ -31,6 +33,7 @@ const Login = ()=> {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        dispatch(setIsLoggedIn(true));
         axios.post('/login', user)
         .then(response => {
             if(response.data){
