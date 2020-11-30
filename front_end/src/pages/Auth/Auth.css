@@ -1,0 +1,32 @@
+.container-auth{
+    position: relative;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+}
+
+.heading-auth{
+    color: black;
+    position: relative;
+    text-align: center;
+    text-decoration: underline;
+    padding: 15px 15px;
+    margin-top: 3%;
+    font-size: 35px;
+}
+
+input[type=text],
+input[type=email],
+input[type=password]{
+    width: 100%;
+    font-size: 18px;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: inline-block;
+    border: 1px solid rgb(77, 75, 75);
+    box-sizing: border-box;
+}

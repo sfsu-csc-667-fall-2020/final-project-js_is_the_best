@@ -36,3 +36,110 @@
     transform: rotate(360deg);
   }
 }
+
+.container-PostListing{
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: 25%;
+  margin-right: 20%;
+}
+
+.heading-PostListing{
+  color: black;
+  position: relative;
+  text-align: center;
+  text-decoration: underline;
+  padding: 15px 15px;
+  margin-top: 3%;
+  font-size: 35px;
+}
+
+input[type=title],
+input[type=number],
+textarea[type=description]{
+  width: 100%;
+  font-size: 18px;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  display: inline-block;
+  border: 1px solid rgb(77, 75, 75);
+  box-sizing: border-box;
+}
+
+input[type=number]{
+  width: 50%;
+  font-size: 18px;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  display: inline-block;
+  border: 1px solid rgb(77, 75, 75);
+  box-sizing: border-box;
+}
+
+.post-button{
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+  min-width: 100px;
+  max-width: 250px;
+}
+
+.profile-image{
+  margin-top: 25%;
+  margin-left: 100%;
+}
+
+.profile-info{
+  margin-top: 10%;
+  font-size: 24px;
+}
+
+.center-navbar {
+  width:30%;
+  margin-left: 35%;
+}
+
+.profile-margin{
+  margin-left: 200px;
+  margin-right: 200px;
+}
+.chat-room .friend-list .list-group-item {
+  margin-bottom: 0;
+  border: 0;
+  border-bottom: 1px solid;
+}
+
+.chat-room .friend-list .list-group-item:last-of-type {
+  border-bottom: 0;
+}
+
+.chat-room .friend-list .list-group-item.active {
+  background-color: #eeeeee;
+}
+
+.chat-room .avatar {
+  height: 3rem;
+  width: 3rem;
+}
+
+.chat-room .chat-message:nth-of-type(even) {
+  flex-direction: row-reverse;
+}
+
+.chat-room .scrollable-friends-list {
+  height: 570px;
+}
+
+.chat-room .scrollable-chat {
+  height: 510px;
+  padding-bottom: 15px;
+}
+
+.footer{
+  position:fixed; 
+  left:0px; 
+  bottom:0px; 
+  width:100%; 
+}
