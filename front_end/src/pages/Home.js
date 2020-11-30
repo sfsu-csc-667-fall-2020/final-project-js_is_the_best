@@ -1,7 +1,9 @@
 import React from 'react';
 import ListingCard from '../components/ListingCard/ListingCard.js';
 import Navigationbar from '../components/Navbar/Navigationbar';
+import NavBar_LogOut from '../components/Navbar/NavBar_LogOut';
 import Footer from '../components/Footer/Footer';
+import {useSelector} from 'react-redux';
 
 //const wsClient = new WebSocket('ws://localhost:5000')
 const Listings = [{
@@ -37,13 +39,22 @@ const Listings = [{
 ]
 
 const Home = () => {
+    
+    const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
     return(
         <div class='Home'>
-            <Navigationbar />
+            {isLoggedIn &&(
+            <Navigationbar />   
+            )}
+            {!isLoggedIn &&(
+            <NavBar_LogOut />                
+            )}
+            
             <ListingCard />
             <ListingCard />
             <ListingCard />
             <ListingCard />
+            <br /><br /><br /><br /><br />
             <Footer />
         </div>
     );

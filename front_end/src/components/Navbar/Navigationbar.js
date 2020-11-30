@@ -3,6 +3,12 @@ import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap'
 
 
 const Navigationbar = ()=>{
+    //needs work!!! should set isLoggedIn to false in the redux store
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    const handleLogout = e => {
+      setLoggedIn(!loggedIn);
+    };
+
     return(
         <div>
         <Navbar bg="dark" variant='dark' expand="lg"   >
@@ -14,8 +20,7 @@ const Navigationbar = ()=>{
                     <Nav.Link href="/profile">Profile</Nav.Link>
                 </Nav>
                 <Form inline>
-                    <Button variant="secondary" style={{marginRight:5}}  href="/login"> Log In </Button>
-                    <Button variant="outline-info"href="/signup"> Sign Up </Button>
+                    <Button variant="secondary" style={{marginRight:5}} href="/login" onClick={handleLogout}> Log Out </Button>
                 </Form>
             </Navbar.Collapse>
         </Navbar>

@@ -4,7 +4,10 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
+import NavBar_LogOut from '../../components/Navbar/NavBar_LogOut';
 import Footer from '../../components/Footer/Footer';
+import {useSelector} from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 // function validate(username, email, password, confirmPassword) {
@@ -31,6 +34,9 @@ import axios from 'axios';
 
 const Signup = ()=>{
     //store in redux
+
+    const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
+
     const [userInfo, setUserInfo] = useState({
         username: '',
         email: '',
@@ -74,7 +80,12 @@ const Signup = ()=>{
         const { errors } = userInfo;
         return(
             <div>
-                <Navigationbar />
+                {isLoggedIn &&(
+                <Redirect to="/" />   
+                )}
+                {!isLoggedIn &&(
+                <NavBar_LogOut />                
+                )}
                 <div className="container-auth">
                 <h1 className="heading-auth">Sign Up</h1>
                 <Form onSubmit={handleSubmit}>
@@ -103,6 +114,11 @@ const Signup = ()=>{
                     <p style={{textAlign:"center"}}> Already have an account? <a href="/login"><u> Log In here! </u></a></p>
                 </Form>
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <Footer />
             </div>
     )

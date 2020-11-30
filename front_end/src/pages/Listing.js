@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 import Navigationbar from '../components/Navbar/Navigationbar';
 import Footer from '../components/Footer/Footer';
 import {useSelector} from 'react-redux';
+import NavBar_LogOut from '../components/Navbar/NavBar_LogOut';
 
 const SingleListing = {
     img: './placeholder-image.jpg',
@@ -14,7 +15,12 @@ const Listing = () => {
     const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
     return(
         <div>
-         <Navigationbar />
+         {isLoggedIn &&(
+            <Navigationbar />   
+            )}
+            {!isLoggedIn &&(
+            <NavBar_LogOut />                
+            )}
          <br />
     <a href='/' style={{fontSize: '18px', marginLeft:'30px'}}><u> {"<"} Back to Listings</u></a>
          <div style={{margin:'5%'}}>

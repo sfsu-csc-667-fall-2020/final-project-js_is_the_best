@@ -95,12 +95,13 @@ class Inquiry extends Component {
               <li>
                 <div className="form-group basic-textarea">
                   <textarea className="form-control pl-2 my-0" id="exampleFormControlTextarea2" rows="3" placeholder="Type your inquiry here..." />
-                  <Button color="info" rounded size="sm" className="float-right mt-4"> Send </Button>
+                  <Button color="info" size="lg" rounded className="float-right mt-4"> Send </Button>
                 </div>
               </li>
             </MDBListGroup>
           </MDBCardBody>
         </MDBCard>
+        <br /><br /><br /><br />
         <Footer />
       </div>
     );
