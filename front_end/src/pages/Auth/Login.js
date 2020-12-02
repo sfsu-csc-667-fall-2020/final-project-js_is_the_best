@@ -9,7 +9,7 @@ import Footer from '../../components/Footer/Footer';
 import {useSelector, useDispatch} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { setIsLoggedIn } from '../../redux/actions/userActions';
+import { loginUser } from '../../redux/actions/userActions';
 
 const Login = ()=> {
     const dispatch = useDispatch();
@@ -23,21 +23,22 @@ const Login = ()=> {
 
     const handleChange = (e) => {
         setUser({
+            ...user,
             [e.target.name]: e.target.value
         });
     }
     
     const handleSubmit = (e) => {
         e.preventDefault();
+
     }
 
     const handleLogin = (e) => {
         e.preventDefault();
-        dispatch(setIsLoggedIn(true));
-        axios.post('/login', user)
-        .then(response => {
-            if(response.data){
-                this.props.history.push('/Profile');
+        axios.post('/auth/login', user)
+        .then(res => {
+            if(res.data.success){
+                dispatch(loginUser(res.data.user));
             }
             else{
                  alert("Incorrect email or password");
@@ -58,7 +59,7 @@ const Login = ()=> {
             <div className="container-auth">
                 <h1 className="heading-auth">Log In</h1>
                 <br />
-                <Form onSubmit={handleSubmit}>
+                <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" name="email" value={user.email} onChange={handleChange} required/>

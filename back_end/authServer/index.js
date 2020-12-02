@@ -19,7 +19,7 @@ mongoose
   });
 
 const app = express();
-const port = 3001;
+const port = 5001;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -42,7 +42,7 @@ app.post("/auth/register", async (req, res, next) => {
         if (error) return next(error);
         const token = jwt.sign({ user: user }, "secret_jwt_key");
         res.cookie("jwtToken", token, { maxAge: 360000 });
-        return res.send(user);
+        return res.send({ success: true, user });
       });
     } catch (error) {
       return res.send({ success: false, error: "internal error" });
@@ -63,7 +63,7 @@ app.post("/auth/login", async (req, res, next) => {
         if (error) return res.send({ success: false, error: "internal error" });
         const token = jwt.sign({ user: user }, "secret_jwt_key");
         res.cookie("jwtToken", token, { maxAge: 360000 });
-        return res.send(user);
+        return res.send({ success: true, user });
       });
     } catch (error) {
       return res.send({ success: false, error: "internal error" });

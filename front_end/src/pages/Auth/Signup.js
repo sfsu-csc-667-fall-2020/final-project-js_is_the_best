@@ -6,7 +6,8 @@ import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
 import NavBar_LogOut from '../../components/Navbar/NavBar_LogOut';
 import Footer from '../../components/Footer/Footer';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginUser} from "../../redux/actions/userActions"
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -36,7 +37,7 @@ const Signup = ()=>{
     //store in redux
 
     const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
-
+    const dispatch = useDispatch()
     const [userInfo, setUserInfo] = useState({
         username: '',
         email: '',
@@ -48,9 +49,10 @@ const Signup = ()=>{
     //placeholder functionality - to be updated
     const handleChange = (e) => {
         setUserInfo({
+            ...userInfo,
             [e.target.name]: e.target.value
         });
-        console.log(userInfo)
+        // console.log(userInfo)
     }
     
     const handleSubmit = (e) => {
@@ -66,9 +68,14 @@ const Signup = ()=>{
 
     const handleSignUp = (e) => {
         e.preventDefault();
-         axios.post('/signup', userInfo)
+        axios.post('/auth/register', userInfo)
         .then(response => {
-            this.props.history.push('/Login');
+ 
+            if(response.data.success){
+                dispatch(loginUser(response.data.user))
+            }else{
+                alert("incorrect credentials")
+            }
         })
         .catch(error => {
             console.log(error)
@@ -92,7 +99,7 @@ const Signup = ()=>{
                 {/* {errors.map(error => (<p key={error}>Error: {error}</p>))} */}
                     <Form.Group controlId="formBasicText">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Name" name="username" value={userInfo.username} onChange={handleChange} required/>
+                        <Form.Control type="text" placeholder="Enter Name" name="name" value={userInfo.name} onChange={handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
@@ -109,7 +116,7 @@ const Signup = ()=>{
                     <Form.Group>
                         <Form.Check id="agree" type="checkbox" style={{marginLeft:"45px"}} label="I agree to the Terms &amp; Conditions" />
                     </Form.Group>
-                    <Button block size="lg" variant="primary" onClick={handleSubmit}> Sign Up </Button>
+                    <Button block size="lg" variant="primary" onClick={handleSignUp}> Sign Up </Button>
                     <br />
                     <p style={{textAlign:"center"}}> Already have an account? <a href="/login"><u> Log In here! </u></a></p>
                 </Form>

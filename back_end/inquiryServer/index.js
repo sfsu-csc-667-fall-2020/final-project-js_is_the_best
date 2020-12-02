@@ -11,7 +11,7 @@ const redis = require("redis");
 const redisClient = redis.createClient();
 
 const app = express();
-const port = 3002;
+const port = 5002;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
