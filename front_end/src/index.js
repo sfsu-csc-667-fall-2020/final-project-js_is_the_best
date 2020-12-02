@@ -42,6 +42,7 @@ const App = () => {
         <Route path="/Profile" component={Profile} />
         <Route path="/PostListing" component={PostListing} />
         <Route path="/Messages" component={MessageCenter} />
+        <Route path="/Listing/:id" component={Listing} />
         <Route path="/Listing" component={Listing} />
         <Route path="/Inquiry" component={Inquiry} />
       </Switch>

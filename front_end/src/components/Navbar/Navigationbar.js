@@ -25,8 +25,12 @@ const Navigationbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="m-auto">
-            <Nav.Link href="/postlisting">Post Listing</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
+            {isLoggedIn ? (
+              <>
+                <Nav.Link href="/postlisting">Post Listing</Nav.Link>
+                <Nav.Link href="/profile">Profile</Nav.Link>
+              </>
+            ) : null}
           </Nav>
           {isLoggedIn ? (
             <Button
