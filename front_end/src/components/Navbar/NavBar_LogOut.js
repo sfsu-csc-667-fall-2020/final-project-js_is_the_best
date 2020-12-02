@@ -10,8 +10,7 @@ const NavBar_LogOut = ()=>{
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
-                    <Button variant="secondary" style={{marginRight:5}}  href="/login"> Log In </Button>
-                    <Button variant="outline-info"href="/signup"> Sign Up </Button>
+      
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

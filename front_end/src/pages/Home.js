@@ -43,12 +43,8 @@ const Home = () => {
     const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
     return(
         <div class='Home'>
-            {isLoggedIn &&(
             <Navigationbar />   
-            )}
-            {!isLoggedIn &&(
-            <NavBar_LogOut />                
-            )}
+    
             <div style={{fontSize:'35px', textAlign:'center', marginTop:'3%', marginBottom: '3%'}}>
                 <u>Available Listings </u>
             </div>

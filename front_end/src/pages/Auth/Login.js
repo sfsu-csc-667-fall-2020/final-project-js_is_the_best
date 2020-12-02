@@ -52,9 +52,6 @@ const Login = ()=> {
                 {isLoggedIn &&(
             <Redirect to="/" /> 
             )}
-            {!isLoggedIn &&(
-            <NavBar_LogOut />                
-            )}
             
             <div className="container-auth">
                 <h1 className="heading-auth">Log In</h1>

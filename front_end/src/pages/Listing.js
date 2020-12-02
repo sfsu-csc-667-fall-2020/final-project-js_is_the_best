@@ -15,12 +15,8 @@ const Listing = () => {
     const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
     return(
         <div>
-         {isLoggedIn &&(
             <Navigationbar />   
-            )}
-            {!isLoggedIn &&(
-            <NavBar_LogOut />                
-            )}
+        
          <br />
     <a href='/' style={{fontSize: '18px', marginLeft:'30px'}}><u> {"<"} Back to Listings</u></a>
          <div style={{margin:'5%'}}>
