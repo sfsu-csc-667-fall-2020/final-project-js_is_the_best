@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
-import NavBar_LogOut from '../../components/Navbar/NavBar_LogOut';
 import Footer from '../../components/Footer/Footer';
 import {useSelector, useDispatch} from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -27,11 +26,6 @@ const Login = ()=> {
             [e.target.name]: e.target.value
         });
     }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-    }
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -49,6 +43,7 @@ const Login = ()=> {
 {
         return (
             <div>
+                 <Navigationbar />
                 {isLoggedIn &&(
             <Redirect to="/" /> 
             )}
@@ -66,7 +61,7 @@ const Login = ()=> {
                         <Form.Control type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} required/>
                     </Form.Group>
                     <Button block size="lg" variant="primary" onClick={handleLogin}> Log In </Button>
-                    <p className="forgot-password text-right"> <a href="/">Forgot password?</a></p>
+                    {/* <p className="forgot-password text-right"> <a href="/">Forgot password?</a></p> */}
                 </Form>
             </div>
             <Footer />

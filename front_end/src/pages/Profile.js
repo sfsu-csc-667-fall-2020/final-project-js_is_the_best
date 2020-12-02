@@ -1,13 +1,14 @@
 import React from 'react';
 import '../App.css';
-//import Image from 'react-bootstrap/Image';
 import Figure from 'react-bootstrap/Figure';
 import FigureCaption from 'react-bootstrap/FigureCaption'
 import { Row, Col } from 'react-bootstrap';
 import Navigationbar from '../components/Navbar/Navigationbar';
 import Footer from '../components/Footer/Footer';
+import { useParams, useHistory } from "react-router-dom";
 
 const Profile = () =>{
+    
     return(
     <div>
         <Navigationbar />
@@ -45,5 +46,3 @@ const Profile = () =>{
 }
 
 export default Profile;
-
-//<Image src="./placeholder-image.png" roundedCircle style={{border:"1px solid black"}}/>

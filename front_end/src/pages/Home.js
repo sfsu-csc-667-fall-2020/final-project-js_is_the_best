@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ListingCard from "../components/ListingCard/ListingCard.js";
 import Navigationbar from "../components/Navbar/Navigationbar";
-import NavBar_LogOut from "../components/Navbar/NavBar_LogOut";
 import Footer from "../components/Footer/Footer";
 import { useSelector } from "react-redux";
 import Axios from "axios";
@@ -9,7 +8,6 @@ import Axios from "axios";
 //const wsClient = new WebSocket('ws://localhost:5000')
 
 const Home = () => {
-  const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
   const [listings, setListings] = useState([]);
   useEffect(() => {
     Axios.get("/listing/getListings")
@@ -22,9 +20,8 @@ const Home = () => {
   }, []);
 
   return (
-    <div class="Home">
+    <div class="Home" style={{marginBottom:'10%'}}>
       <Navigationbar />
-
       <div
         style={{
           fontSize: "35px",
@@ -38,15 +35,9 @@ const Home = () => {
       {listings.map((listing, i) => (
         <ListingCard key={i} {...listing} />
       ))}
-
       <ListingCard />
       <ListingCard />
       <ListingCard />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <Footer />
     </div>
   );

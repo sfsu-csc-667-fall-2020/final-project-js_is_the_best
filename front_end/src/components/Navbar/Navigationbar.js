@@ -5,12 +5,9 @@ import { logoutUser } from "../../redux/actions/userActions";
 import Axios from "axios";
 
 const Navigationbar = () => {
-  //needs work!!! should set isLoggedIn to false in the redux store
-  // const [loggedIn, setLoggedIn] = React.useState(false);
   const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    console.log("came here");
     Axios.post("/auth/logout").then(res => {
       if (res.data.success) {
         dispatch(logoutUser());

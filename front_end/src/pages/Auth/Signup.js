@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
-import NavBar_LogOut from '../../components/Navbar/NavBar_LogOut';
 import Footer from '../../components/Footer/Footer';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginUser} from "../../redux/actions/userActions"
@@ -34,8 +33,6 @@ import axios from 'axios';
 //   }
 
 const Signup = ()=>{
-    //store in redux
-
     const isLoggedIn = useSelector(state=>state.userReducer.isLoggedIn);
     const dispatch = useDispatch()
     const [userInfo, setUserInfo] = useState({
@@ -46,7 +43,6 @@ const Signup = ()=>{
         errors: [],
     });
 
-    //placeholder functionality - to be updated
     const handleChange = (e) => {
         setUserInfo({
             ...userInfo,
@@ -57,7 +53,6 @@ const Signup = ()=>{
     
     const handleSubmit = (e) => {
         e.preventDefault();
-
         // const { username, email, password, confirmPassword } = userInfo;
         // const errors = validate(username, email, password, confirmPassword);
         // if (errors.length > 0) {
@@ -70,32 +65,25 @@ const Signup = ()=>{
         e.preventDefault();
         axios.post('/auth/register', userInfo)
         .then(response => {
- 
             if(response.data.success){
                 dispatch(loginUser(response.data.user))
             }else{
-                alert("incorrect credentials")
+                alert("Incorrect credentials")
             }
         })
         .catch(error => {
             console.log(error)
         });
       }
-
-
-{
-        const { errors } = userInfo;
+      
+      {
+        // const { errors } = userInfo;
         return(
-            <div>
-                {isLoggedIn &&(
-                <Redirect to="/" />   
-                )}
-                {!isLoggedIn &&(
-                <NavBar_LogOut />                
-                )}
+            <div style={{marginBottom: '10%'}}>
+                <Navigationbar />
                 <div className="container-auth">
                 <h1 className="heading-auth">Sign Up</h1>
-                <Form onSubmit={handleSubmit}>
+                <Form>
                 {/* {errors.map(error => (<p key={error}>Error: {error}</p>))} */}
                     <Form.Group controlId="formBasicText">
                         <Form.Label>Name</Form.Label>
@@ -121,11 +109,6 @@ const Signup = ()=>{
                     <p style={{textAlign:"center"}}> Already have an account? <a href="/login"><u> Log In here! </u></a></p>
                 </Form>
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Footer />
             </div>
     )
