@@ -46,26 +46,27 @@ consumer.on("message", async message => {
         let fileData = await awsS3.getFileData(
           "./processedImages/100resize.jpg"
         );
-        // await awsS3.addS3file("csc667-final", fileName, fileData);
+        await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl1 =
           "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
         //store second file on bucket
         fileName = "img/" + (contents.length + 1) + "_500resize" + ".jpg";
         fileData = await awsS3.getFileData("./processedImages/500resize.jpg");
-        // await awsS3.addS3file("csc667-final", fileName, fileData);
+        await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl2 =
           "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
-
         // update listing to contain urls
-        let listing
-        const res = await Listing.updateOne({_id: listingId}, {image100Url: imgUrl1, image500Url: imgUrl2})
-        if(res.nModified === 1) {
-          listing = await Listing.findById(listingId)
-          console.log(listing)
+        let listing;
+        const res = await Listing.updateOne(
+          { _id: listingId },
+          { image100Url: imgUrl1, image500Url: imgUrl2 }
+        );
+        if (res.nModified === 1) {
+          listing = await Listing.findById(listingId);
         } else {
-          listing = {success: false, message: 'failed updating listing'}
+          listing = { success: false, message: "failed updating listing" };
         }
 
         fs.unlinkSync("./imageUploads/" + file.filename);
@@ -74,7 +75,7 @@ consumer.on("message", async message => {
 
         console.log("done upload");
 
-        redisClient.publish("ImageProcessDone", listing);
+        redisClient.publish("ImageProcessDone", JSON.stringify(listing));
       } catch (err) {
         console.log(err);
         break;

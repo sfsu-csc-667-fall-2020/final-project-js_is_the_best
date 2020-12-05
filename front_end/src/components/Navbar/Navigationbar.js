@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/actions/userActions";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 
 const Navigationbar = () => {
@@ -24,8 +25,10 @@ const Navigationbar = () => {
           <Nav className="m-auto">
             {isLoggedIn ? (
               <>
-                <Nav.Link href="/postlisting">Post Listing</Nav.Link>
-                <Nav.Link href="/profile">Profile</Nav.Link>
+                <Link to="/postlisting" style={{ marginRight: 20 }}>
+                  Post Listing
+                </Link>
+                <Link to="/profile">Profile</Link>
               </>
             ) : null}
           </Nav>

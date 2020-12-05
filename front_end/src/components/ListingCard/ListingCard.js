@@ -34,7 +34,7 @@ const ListingCard = props => {
             >
               {props.image100Url ? (
                 <img
-                  src={props.img}
+                  src={props.image100Url}
                   alt="listing_img"
                   style={{
                     height: "100px",
