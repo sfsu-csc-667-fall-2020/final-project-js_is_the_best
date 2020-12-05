@@ -35,9 +35,6 @@ const Home = () => {
       {listings.map((listing, i) => (
         <ListingCard key={i} {...listing} />
       ))}
-      <ListingCard />
-      <ListingCard />
-      <ListingCard />
       <Footer />
     </div>
   );

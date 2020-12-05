@@ -9,12 +9,14 @@ const User = require("../db/models/user").model;
 const Listing = require("../db/models/listing");
 const redis = require("redis");
 const redisClient = redis.createClient();
+const morgan = require("morgan");
 
 const app = express();
 const port = 5002;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 connectMongoDb("Team5");
 
@@ -94,6 +96,48 @@ app.post(
   }
 );
 
+app.post(
+  "/inquiry/admSendMessage",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      let admInquiry = await Inquiry.findOne({
+        _id: req.body.inquiryId
+      }).exec();
+
+      if (admInquiry) {
+        admInquiry.messages.push({
+          senderId: req.user._id,
+          body: req.body.message
+        });
+        admInquiry.save(async (err, inquiry) => {
+          if (err) {
+            console.log("reach here");
+            return res.send({ success: false });
+          }
+          await redisClient.publish(
+            "newInquiryMessage",
+            JSON.stringify(admInquiry)
+          );
+          return res.send({
+            success: true,
+            data: {
+              inquiry: admInquiry
+            }
+          });
+        });
+      } else {
+        return res.send({ success: false });
+      }
+    } catch (error) {
+      return res.send({
+        success: false,
+        message: "error sending message."
+      });
+    }
+  }
+);
+
 app.get(
   "/inquiry/getUserInquiries",
   passport.authenticate("jwt", { session: false }),
@@ -110,6 +154,41 @@ app.get(
         inquiries
       }
     });
+  }
+);
+
+app.post(
+  "/inquiry/getAdmInquiries",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const inquiries = await Inquiry.find({ listingId: req.body.listingId });
+      return res.send({
+        success: true,
+        inquiries
+      });
+    } catch (err) {
+      return res.send({ success: false });
+    }
+  }
+);
+
+app.post(
+  "/inquiry/getUserInquiry",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const inquiry = await Inquiry.findOne({
+        listingId: req.body.listingId,
+        senderId: req.user._id
+      });
+      return res.send({
+        success: true,
+        inquiry
+      });
+    } catch (err) {
+      return res.send({ success: false });
+    }
   }
 );
 

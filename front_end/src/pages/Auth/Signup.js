@@ -80,6 +80,7 @@ const Signup = ()=>{
         // const { errors } = userInfo;
         return(
             <div style={{marginBottom: '10%'}}>
+                {isLoggedIn && <Redirect to="/" />}
                 <Navigationbar />
                 <div className="container-auth">
                 <h1 className="heading-auth">Sign Up</h1>
