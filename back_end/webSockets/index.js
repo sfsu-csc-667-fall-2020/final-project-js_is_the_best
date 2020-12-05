@@ -12,7 +12,7 @@ const broadcast = data => {
 };
 
 redisClient.on("message", (channel, message) => {
-  console.log(channel, message);
+  // console.log(channel, message);
   switch (channel) {
     case "newInquiryMessage":
       broadcast({ type: "newInquiryMessage", inquiry: JSON.parse(message) });

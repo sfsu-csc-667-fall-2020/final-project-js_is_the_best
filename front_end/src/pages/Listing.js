@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import Navigationbar from "../components/Navbar/Navigationbar";
 import Footer from "../components/Footer/Footer";
@@ -61,6 +61,68 @@ const Listing = props => {
     }
   }, [user, listing]);
 
+  const ws = useRef(null);
+  useEffect(() => {
+    ws.current = new WebSocket("ws://localhost:5004");
+
+    return () => {
+      ws.current.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    ws.current.onmessage = e => {
+      const message = JSON.parse(e.data);
+      switch (message.type) {
+        case "newInquiryMessage":
+          if (listing && user && message.inquiry) {
+            if (user._id === listing.posterId) {
+              setInquiries(inquiries => {
+                inquiries.forEach(inq => {
+                  if (inq._id === message.inquiry._id) {
+                    inq.messages = message.inquiry.messages;
+                  }
+                });
+                return [...inquiries];
+              });
+            } else {
+              if (inquiry && inquiry._id === message.inquiry._id) {
+                setInquiry(message.inquiry);
+              }
+            }
+          } else {
+          }
+
+          break;
+        case "ImageProcessDone":
+          if (listing && listing._id === message.listing._id) {
+            setListing({
+              ...listing,
+              image100Url: message.listing.image100Url,
+              image500Url: message.listing.image500Url
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    };
+  }, [user, listing, inquiry, inquiries]);
+
+  useEffect(() => {
+    let objDiv = document.getElementById("scrollerDiv2");
+    if (objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  }, [inquiry]);
+  useEffect(() => {
+    let objDivs = document.getElementsByClassName("scrollerDiv1");
+    if (objDivs && objDivs.length > 0) console.log(objDivs);
+    for (let objDiv of objDivs) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  }, [inquiries]);
+
   return (
     <div>
       <Navigationbar />
@@ -86,9 +148,9 @@ const Listing = props => {
                   borderStyle: "solid"
                 }}
               >
-                {props.image500Url ? (
+                {listing.image500Url ? (
                   <img
-                    src={props.img}
+                    src={listing.image500Url}
                     alt="listing_img"
                     style={{
                       height: "500px",
@@ -141,6 +203,7 @@ const Listing = props => {
                               }}
                             >
                               <div
+                                className="scrollerDiv1"
                                 style={{
                                   height: 350,
                                   padding: 20,
@@ -183,13 +246,20 @@ const Listing = props => {
                                       // message, listingId
                                       const message = document.getElementById(
                                         "inquiryMessage" + inq._id
-                                      ).value;
-                                      if (message && message.length > 0) {
+                                      );
+                                      if (
+                                        message.value &&
+                                        message.value.length > 0
+                                      ) {
                                         Axios.post("/inquiry/admSendMessage", {
                                           inquiryId: inq._id,
-                                          message: message
+                                          message: message.value
                                         })
-                                          .then(res => {})
+                                          .then(res => {
+                                            if (res.data.success) {
+                                              message.value = "";
+                                            }
+                                          })
                                           .catch(err => {});
                                       }
                                     }}
@@ -213,6 +283,7 @@ const Listing = props => {
                   >
                     <h2>Inquiry Chat:</h2>
                     <div
+                      id="scrollerDiv2"
                       style={{
                         height: 350,
                         padding: 20,
@@ -255,13 +326,17 @@ const Listing = props => {
                             // message, listingId
                             const message = document.getElementById(
                               "inquiryMessage0"
-                            ).value;
-                            if (message && message.length > 0) {
+                            );
+                            if (message.value && message.value.length > 0) {
                               Axios.post("/inquiry/sendMessage", {
                                 listingId: listing._id,
-                                message: message
+                                message: message.value
                               })
-                                .then(res => {})
+                                .then(res => {
+                                  if (res.data.success) {
+                                    message.value = "";
+                                  }
+                                })
                                 .catch(err => {});
                             }
                           }}

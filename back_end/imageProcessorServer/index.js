@@ -46,14 +46,14 @@ consumer.on("message", async message => {
         let fileData = await awsS3.getFileData(
           "./processedImages/100resize.jpg"
         );
-        await awsS3.addS3file("csc667-final", fileName, fileData);
+        // await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl1 =
           "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
         //store second file on bucket
         fileName = "img/" + (contents.length + 1) + "_500resize" + ".jpg";
         fileData = await awsS3.getFileData("./processedImages/500resize.jpg");
-        await awsS3.addS3file("csc667-final", fileName, fileData);
+        // await awsS3.addS3file("csc667-final", fileName, fileData);
         const imgUrl2 =
           "https://csc667-final.s3-us-west-1.amazonaws.com/" + fileName;
 
