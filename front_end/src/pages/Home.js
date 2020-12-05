@@ -1,26 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ListingCard from "../components/ListingCard/ListingCard.js";
 import Navigationbar from "../components/Navbar/Navigationbar";
 import Footer from "../components/Footer/Footer";
 import { useSelector } from "react-redux";
 import Axios from "axios";
 
-//const wsClient = new WebSocket('ws://localhost:5000')
-
 const Home = () => {
   const [listings, setListings] = useState([]);
+  const ws = useRef(null);
+
   useEffect(() => {
     Axios.get("/listing/getListings")
       .then(res => {
         if (res.data.success) {
-          setListings(res.data.listings);
+          setListings(res.data.listings.reverse());
         }
       })
       .catch(err => {});
   }, []);
 
+  useEffect(() => {
+    ws.current = new WebSocket("ws://localhost:5004");
+
+    ws.current.onmessage = e => {
+      const message = JSON.parse(e.data);
+      switch (message.type) {
+        case "newListing":
+          setListings(listings => [message.listing].concat(listings));
+          break;
+        case "ImageProcessDone":
+          setListings(listings => {
+            listings.forEach(listing => {
+              if (message.listing._id === listing._id) {
+                listing.image100Url = message.listing.image100Url;
+                listing.image500Url = message.listing.image500Url;
+              }
+            });
+            return [...listings];
+          });
+          break;
+        default:
+          break;
+      }
+    };
+
+    return () => {
+      ws.current.close();
+    };
+  }, []);
+
   return (
-    <div class="Home" style={{marginBottom:'10%'}}>
+    <div class="Home" style={{ marginBottom: "10%" }}>
       <Navigationbar />
       <div
         style={{

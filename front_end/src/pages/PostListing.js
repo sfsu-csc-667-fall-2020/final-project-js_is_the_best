@@ -8,10 +8,11 @@ import Footer from "../components/Footer/Footer";
 import "../App.css";
 import Navigationbar from "../components/Navbar/Navigationbar";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import Axios from "axios";
 
 const PostListing = () => {
+  const history = useHistory();
   const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -32,7 +33,11 @@ const PostListing = () => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       })
         .then(resp => {
-          console.log(resp.data);
+          if (resp.data.success) {
+            history.push("/");
+          } else {
+            alert("no no no");
+          }
         })
         .catch(err => {});
     } else {

@@ -12,6 +12,7 @@ const broadcast = data => {
 };
 
 redisClient.on("message", (channel, message) => {
+  console.log(channel, message);
   switch (channel) {
     case "newInquiryMessage":
       broadcast({ type: "newInquiryMessage", inquiry: JSON.parse(message) });
@@ -30,14 +31,14 @@ redisClient.on("message", (channel, message) => {
 
 redisClient.subscribe(["newInquiryMessage", "newListing", "ImageProcessDone"]);
 
-wss.on("connection", ws => {
-  console.log("client connected");
+// wss.on("connection", ws => {
+//   console.log("client connected");
 
-  ws.on("close", () => {
-    console.log("client disconnected");
-  });
+//   ws.on("close", () => {
+//     console.log("client disconnected");
+//   });
 
-  ws.on("message", rawData => {
-    const data = JSON.parse(rawData);
-  });
-});
+//   ws.on("message", rawData => {
+//     const data = JSON.parse(rawData);
+//   });
+// });
