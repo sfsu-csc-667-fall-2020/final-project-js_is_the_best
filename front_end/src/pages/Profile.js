@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Navigationbar from '../components/Navbar/Navigationbar';
 import Footer from '../components/Footer/Footer';
 import {useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import ListingCard from "../components/ListingCard/ListingCard.js";
 import Axios from "axios";
 
@@ -58,6 +58,7 @@ const Profile = () =>{
     return(
     <div style={{marginBottom:'15%'}}>
         {!isLoggedIn && <Redirect to="/Login" />}
+        {isLoggedIn && <div>
         <Navigationbar />
         <div className="profile-margin">
             <div className="profile-info">
@@ -82,7 +83,7 @@ const Profile = () =>{
                 ))}
             </div>
         </div>
-        <Footer />
+        <Footer /></div>}
         </div>
     )
 }
