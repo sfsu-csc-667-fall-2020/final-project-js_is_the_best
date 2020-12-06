@@ -134,6 +134,5 @@ services:
       - webnet
 volumes:
   image-data:
-    external: true
 networks:
   webnet:

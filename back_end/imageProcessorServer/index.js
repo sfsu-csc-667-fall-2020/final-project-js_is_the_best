@@ -25,6 +25,10 @@ consumer.on("message", async message => {
         let file = data.file;
         let listingId = data.listingId;
 
+        if (!fs.existsSync('/var/image-data/processedImages')){
+          fs.mkdirSync('/var/image-data/processedImages');
+        }
+
         // creating temp files for storing resized images
         fs.openSync("/var/image-data/processedImages/100resize.jpg", "w");
         fs.openSync("/var/image-data/processedImages/500resize.jpg", "w");
