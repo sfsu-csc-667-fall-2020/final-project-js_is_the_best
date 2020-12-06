@@ -12,15 +12,16 @@ const Profile = () =>{
 
     const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
     const [listings, setListings] = useState([]);
+    
     const ws = useRef(null);
     const user = useSelector(state => state.userReducer.user);
 
     useEffect(() => {
-        Axios.get("/listing/getListings")
+        Axios.post("/listing/getUserListings")
         .then(res => {
             if (res.data.success) {
-            setListings(res.data.listings.reverse());
-            }
+               setListings(res.data.listings.reverse());
+          }
         })
         .catch(err => {});
     }, []);
@@ -58,7 +59,6 @@ const Profile = () =>{
     return(
     <div style={{marginBottom:'15%'}}>
         {!isLoggedIn && <Redirect to="/Login" />}
-        <Redirect from="/" to="/Profile" />
         {isLoggedIn && 
         <div> 
           <Navigationbar />
@@ -80,9 +80,9 @@ const Profile = () =>{
             }}
             >
                 <h3 style={{marginTop: "25px", textAlign:'center'}}>My Listings</h3>
-                {listings.map((listing, i) => (
+                  {listings.map((listing, i) => (
                     <ListingCard key={i} {...listing} />
-                ))}
+                  ))} 
             </div>
         </div>
         <Footer /></div>}
