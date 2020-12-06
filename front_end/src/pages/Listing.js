@@ -5,6 +5,7 @@ import Footer from "../components/Footer/Footer";
 import { useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
 import Axios from "axios";
+import '../App.css'
 
 const Listing = props => {
   const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
@@ -124,7 +125,7 @@ const Listing = props => {
   }, [inquiries]);
 
   return (
-    <div>
+    <div style={{marginBottom:'5%'}}>
       <Navigationbar />
       <br />
       <a href="/" style={{ fontSize: "18px", marginLeft: "30px" }}>
@@ -163,9 +164,9 @@ const Listing = props => {
               </div>
 
               <div>
-                <p>Title: {listing.title}</p>
-                <p>Price: {listing.price}</p>
-                <p>Description: {listing.description}</p>
+                <p><b>Title:</b> {listing.title}</p>
+                <p><b>Price:</b> ${listing.price}</p>
+                <p><b>Description:</b> {listing.description}</p>
               </div>
             </div>
             {/* inquiry: */}
@@ -173,26 +174,33 @@ const Listing = props => {
               {isLoggedIn ? (
                 user._id === listing.posterId ? (
                   <div>
-                    <h2>Inquiries on your post:</h2>
+                    <h2 style={{textAlign:'center'}}>Inquiries on your post:</h2>
                     {inquiries &&
                       inquiries.map(inq => (
                         <div
                           style={{
-                            borderWidth: 1,
-                            borderStyle: "solid",
                             padding: 20,
-                            marginBottom: 10
+                            alignContent:'center',
+                            marginLeft: '20%',
+                            marginRight: '20%',
                           }}
                         >
-                          <Button
-                            onClick={() => {
-                              setCurrentInquiryId(
-                                currentInquiryId === inq._id ? 0 : inq._id
-                              );
-                            }}
-                          >
-                            {inq.senderId}
-                          </Button>
+                          <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                          }}>
+                            <Button
+                              onClick={() => {
+                                setCurrentInquiryId(
+                                  currentInquiryId === inq._id ? 0 : inq._id
+                                );
+                              }}
+                            >
+                              {/* grab the users name here*/}
+                              {inq.senderId}
+                            </Button>
+                          </div>
                           {currentInquiryId === inq._id && (
                             <div
                               style={{
@@ -213,19 +221,29 @@ const Listing = props => {
                                 {inq &&
                                   inq.messages &&
                                   inq.messages.map(message => (
-                                    <div
-                                      style={{
-                                        textAlign:
-                                          message.senderId === user._id
-                                            ? "right"
-                                            : "left",
-                                        color:
-                                          message.senderId === user._id
-                                            ? "#1700ff"
-                                            : "#ff0000"
-                                      }}
+                                    <div 
+                                        style={{
+                                          textAlign:
+                                            message.senderId === user._id
+                                              ? "right"
+                                              : "left",
+                                          color:
+                                            message.senderId === user._id
+                                              ? "#1700ff"
+                                              : "#ff0000",
+                                        }}
                                     >
-                                      {message.body}
+                                        <div stle={{width: "100%",
+                                              display: "flex" }}>
+                                          <div style={{border: "0.5px solid black",
+                                            borderRadius: "10px",
+                                            margin: "5px",
+                                            padding: "10px",
+                                            display: "inline-block"
+                                          }}>
+                                           {message.body}
+                                        </div>
+                                      </div>
                                     </div>
                                   ))}
                               </div>
@@ -238,10 +256,16 @@ const Listing = props => {
                                 <input
                                   id={"inquiryMessage" + inq._id}
                                   placeholder="message"
-                                  style={{ width: "80%", margin: 10 }}
+                                  style={{ width: "80%", 
+                                  marginBottom: 10, 
+                                  marginLeft: 'auto',
+                                  marginRight: 'auto'}}
                                 />
                                 <div>
-                                  <Button
+                                  <Button 
+                                  style={{
+                                  marginRight: 10
+                                  }}
                                     onClick={() => {
                                       // message, listingId
                                       const message = document.getElementById(
@@ -264,7 +288,7 @@ const Listing = props => {
                                       }
                                     }}
                                   >
-                                    send
+                                    Send
                                   </Button>
                                 </div>
                               </div>
@@ -278,10 +302,13 @@ const Listing = props => {
                     style={{
                       borderWidth: 1,
                       borderStyle: "solid",
-                      textAlign: "center"
+                      textAlign: "center",
+                      marginLeft: '20%',
+                      marginRight: '20%',
+                      marginTop: '5%'
                     }}
                   >
-                    <h2>Inquiry Chat:</h2>
+                    <h2>Inquiry:</h2>
                     <div
                       id="scrollerDiv2"
                       style={{
@@ -305,8 +332,18 @@ const Listing = props => {
                                   : "#ff0000"
                             }}
                           >
-                            {message.body}
+                            <div stle={{width: "100%",
+                            display: "flex" }}>
+                              <div style={{border: "0.5px solid black",
+                              borderRadius: "10px",
+                              margin: "5px",
+                              padding: "10px",
+                              display: "inline-block"
+                            }}>
+                              {message.body}
+                              </div>
                           </div>
+                        </div>
                         ))}
                     </div>
                     <div
@@ -318,10 +355,16 @@ const Listing = props => {
                       <input
                         id="inquiryMessage0"
                         placeholder="message"
-                        style={{ width: "80%", margin: 10 }}
+                        style={{ width: "80%", 
+                        marginBottom: 10, 
+                        marginLeft: 'auto',
+                        marginRight: 'auto' }}
                       />
                       <div>
                         <Button
+                        style={{
+                          marginRight: 15
+                          }}
                           onClick={() => {
                             // message, listingId
                             const message = document.getElementById(
@@ -341,7 +384,7 @@ const Listing = props => {
                             }
                           }}
                         >
-                          send
+                          Send
                         </Button>
                       </div>
                     </div>
@@ -362,7 +405,7 @@ const Listing = props => {
           </>
         )}
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

@@ -46,7 +46,7 @@ const PostListing = () => {
   };
 
   return (
-    <div>
+    <div style={{marginBottom:'15%'}}>
       {!isLoggedIn && <Redirect to="/Login" />}
       <Navigationbar />
       <h1 className="heading-PostListing">Post Listing</h1>
