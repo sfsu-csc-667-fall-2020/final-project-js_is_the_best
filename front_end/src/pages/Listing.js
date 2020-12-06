@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import Navigationbar from "../components/Navbar/Navigationbar";
 import Footer from "../components/Footer/Footer";
 import { useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
 import Axios from "axios";
+import '../App.css'
 
 const Listing = props => {
   const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
@@ -61,8 +62,70 @@ const Listing = props => {
     }
   }, [user, listing]);
 
+  const ws = useRef(null);
+  useEffect(() => {
+    ws.current = new WebSocket("ws://localhost:5004");
+
+    return () => {
+      ws.current.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    ws.current.onmessage = e => {
+      const message = JSON.parse(e.data);
+      switch (message.type) {
+        case "newInquiryMessage":
+          if (listing && user && message.inquiry) {
+            if (user._id === listing.posterId) {
+              setInquiries(inquiries => {
+                inquiries.forEach(inq => {
+                  if (inq._id === message.inquiry._id) {
+                    inq.messages = message.inquiry.messages;
+                  }
+                });
+                return [...inquiries];
+              });
+            } else {
+              if (inquiry && inquiry._id === message.inquiry._id) {
+                setInquiry(message.inquiry);
+              }
+            }
+          } else {
+          }
+
+          break;
+        case "ImageProcessDone":
+          if (listing && listing._id === message.listing._id) {
+            setListing({
+              ...listing,
+              image100Url: message.listing.image100Url,
+              image500Url: message.listing.image500Url
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    };
+  }, [user, listing, inquiry, inquiries]);
+
+  useEffect(() => {
+    let objDiv = document.getElementById("scrollerDiv2");
+    if (objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  }, [inquiry]);
+  useEffect(() => {
+    let objDivs = document.getElementsByClassName("scrollerDiv1");
+    if (objDivs && objDivs.length > 0) console.log(objDivs);
+    for (let objDiv of objDivs) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  }, [inquiries]);
+
   return (
-    <div>
+    <div style={{marginBottom:'5%'}}>
       <Navigationbar />
       <br />
       <a href="/" style={{ fontSize: "18px", marginLeft: "30px" }}>
@@ -86,9 +149,9 @@ const Listing = props => {
                   borderStyle: "solid"
                 }}
               >
-                {props.image500Url ? (
+                {listing.image500Url ? (
                   <img
-                    src={props.img}
+                    src={listing.image500Url}
                     alt="listing_img"
                     style={{
                       height: "500px",
@@ -101,9 +164,9 @@ const Listing = props => {
               </div>
 
               <div>
-                <p>Title: {listing.title}</p>
-                <p>Price: {listing.price}</p>
-                <p>Description: {listing.description}</p>
+                <p><b>Title:</b> {listing.title}</p>
+                <p><b>Price:</b> ${listing.price}</p>
+                <p><b>Description:</b> {listing.description}</p>
               </div>
             </div>
             {/* inquiry: */}
@@ -111,26 +174,33 @@ const Listing = props => {
               {isLoggedIn ? (
                 user._id === listing.posterId ? (
                   <div>
-                    <h2>Inquiries on your post:</h2>
+                    <h2 style={{textAlign:'center'}}>Inquiries on your post:</h2>
                     {inquiries &&
                       inquiries.map(inq => (
                         <div
                           style={{
-                            borderWidth: 1,
-                            borderStyle: "solid",
                             padding: 20,
-                            marginBottom: 10
+                            alignContent:'center',
+                            marginLeft: '20%',
+                            marginRight: '20%',
                           }}
                         >
-                          <Button
-                            onClick={() => {
-                              setCurrentInquiryId(
-                                currentInquiryId === inq._id ? 0 : inq._id
-                              );
-                            }}
-                          >
-                            {inq.senderId}
-                          </Button>
+                          <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                          }}>
+                            <Button
+                              onClick={() => {
+                                setCurrentInquiryId(
+                                  currentInquiryId === inq._id ? 0 : inq._id
+                                );
+                              }}
+                            >
+                              {/* grab the users name here*/}
+                              {inq.senderId}
+                            </Button>
+                          </div>
                           {currentInquiryId === inq._id && (
                             <div
                               style={{
@@ -141,6 +211,7 @@ const Listing = props => {
                               }}
                             >
                               <div
+                                className="scrollerDiv1"
                                 style={{
                                   height: 350,
                                   padding: 20,
@@ -150,19 +221,29 @@ const Listing = props => {
                                 {inq &&
                                   inq.messages &&
                                   inq.messages.map(message => (
-                                    <div
-                                      style={{
-                                        textAlign:
-                                          message.senderId === user._id
-                                            ? "right"
-                                            : "left",
-                                        color:
-                                          message.senderId === user._id
-                                            ? "#1700ff"
-                                            : "#ff0000"
-                                      }}
+                                    <div 
+                                        style={{
+                                          textAlign:
+                                            message.senderId === user._id
+                                              ? "right"
+                                              : "left",
+                                          color:
+                                            message.senderId === user._id
+                                              ? "#1700ff"
+                                              : "#ff0000",
+                                        }}
                                     >
-                                      {message.body}
+                                        <div stle={{width: "100%",
+                                              display: "flex" }}>
+                                          <div style={{border: "0.5px solid black",
+                                            borderRadius: "10px",
+                                            margin: "5px",
+                                            padding: "10px",
+                                            display: "inline-block"
+                                          }}>
+                                           {message.body}
+                                        </div>
+                                      </div>
                                     </div>
                                   ))}
                               </div>
@@ -175,26 +256,39 @@ const Listing = props => {
                                 <input
                                   id={"inquiryMessage" + inq._id}
                                   placeholder="message"
-                                  style={{ width: "80%", margin: 10 }}
+                                  style={{ width: "80%", 
+                                  marginBottom: 10, 
+                                  marginLeft: 'auto',
+                                  marginRight: 'auto'}}
                                 />
                                 <div>
-                                  <Button
+                                  <Button 
+                                  style={{
+                                  marginRight: 10
+                                  }}
                                     onClick={() => {
                                       // message, listingId
                                       const message = document.getElementById(
                                         "inquiryMessage" + inq._id
-                                      ).value;
-                                      if (message && message.length > 0) {
+                                      );
+                                      if (
+                                        message.value &&
+                                        message.value.length > 0
+                                      ) {
                                         Axios.post("/inquiry/admSendMessage", {
                                           inquiryId: inq._id,
-                                          message: message
+                                          message: message.value
                                         })
-                                          .then(res => {})
+                                          .then(res => {
+                                            if (res.data.success) {
+                                              message.value = "";
+                                            }
+                                          })
                                           .catch(err => {});
                                       }
                                     }}
                                   >
-                                    send
+                                    Send
                                   </Button>
                                 </div>
                               </div>
@@ -208,11 +302,15 @@ const Listing = props => {
                     style={{
                       borderWidth: 1,
                       borderStyle: "solid",
-                      textAlign: "center"
+                      textAlign: "center",
+                      marginLeft: '20%',
+                      marginRight: '20%',
+                      marginTop: '5%'
                     }}
                   >
-                    <h2>Inquiry Chat:</h2>
+                    <h2>Inquiry:</h2>
                     <div
+                      id="scrollerDiv2"
                       style={{
                         height: 350,
                         padding: 20,
@@ -234,8 +332,18 @@ const Listing = props => {
                                   : "#ff0000"
                             }}
                           >
-                            {message.body}
+                            <div stle={{width: "100%",
+                            display: "flex" }}>
+                              <div style={{border: "0.5px solid black",
+                              borderRadius: "10px",
+                              margin: "5px",
+                              padding: "10px",
+                              display: "inline-block"
+                            }}>
+                              {message.body}
+                              </div>
                           </div>
+                        </div>
                         ))}
                     </div>
                     <div
@@ -247,26 +355,36 @@ const Listing = props => {
                       <input
                         id="inquiryMessage0"
                         placeholder="message"
-                        style={{ width: "80%", margin: 10 }}
+                        style={{ width: "80%", 
+                        marginBottom: 10, 
+                        marginLeft: 'auto',
+                        marginRight: 'auto' }}
                       />
                       <div>
                         <Button
+                        style={{
+                          marginRight: 15
+                          }}
                           onClick={() => {
                             // message, listingId
                             const message = document.getElementById(
                               "inquiryMessage0"
-                            ).value;
-                            if (message && message.length > 0) {
+                            );
+                            if (message.value && message.value.length > 0) {
                               Axios.post("/inquiry/sendMessage", {
                                 listingId: listing._id,
-                                message: message
+                                message: message.value
                               })
-                                .then(res => {})
+                                .then(res => {
+                                  if (res.data.success) {
+                                    message.value = "";
+                                  }
+                                })
                                 .catch(err => {});
                             }
                           }}
                         >
-                          send
+                          Send
                         </Button>
                       </div>
                     </div>
@@ -287,7 +405,7 @@ const Listing = props => {
           </>
         )}
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

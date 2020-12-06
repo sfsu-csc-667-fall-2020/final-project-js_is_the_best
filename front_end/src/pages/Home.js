@@ -50,7 +50,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div class="Home" style={{ marginBottom: "10%" }}>
+    <div className="Home" style={{ marginBottom: "15%" }}>
       <Navigationbar />
       <div
         style={{

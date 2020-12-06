@@ -16,6 +16,7 @@ const ListingCard = props => {
             style={{
               display: "flex",
               justifyContent: "flex-start",
+              flexWrap: 'wrap',
               alignItems: "center"
             }}
           >
