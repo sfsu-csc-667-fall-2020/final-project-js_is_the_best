@@ -27,7 +27,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.post("/auth/user").then(res => {
+    axios.post("http://localhost:5000/auth/user").then(res => {
       if (res.data.success) {
         dispatch(loginUser(res.data.user));
       }

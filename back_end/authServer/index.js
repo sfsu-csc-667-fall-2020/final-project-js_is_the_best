@@ -2,12 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const passport = require("../lib/passport/index");
+const passport = require("./lib/passport/index");
 const morgan = require("morgan");
 
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://localhost:27017/Team5", {
+  .connect("mongodb://host.docker.internal:27017/Team5", {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -35,7 +35,7 @@ app.post("/auth/register", async (req, res, next) => {
       if (err || !user) {
         return res.send({
           success: false,
-          error: "missing/incorrect credentials"
+          error: err
         });
       }
       req.login(user, { session: false }, async error => {

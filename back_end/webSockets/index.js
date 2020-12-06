@@ -1,6 +1,6 @@
 const WebSocket = require("ws");
 const redis = require("redis");
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({host: 'redis'});
 
 const wss = new WebSocket.Server({ port: 5004 });
 

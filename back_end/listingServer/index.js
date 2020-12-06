@@ -1,14 +1,14 @@
 const express = require("express");
-const passport = require("../lib/passport/index");
+const passport = require("./lib/passport/index");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const Listing = require("../db/models/listing");
+const Listing = require("./db/models/listing");
 const morgan = require("morgan");
 
 const redis = require("redis");
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({host: 'redis'});
 
-const KafkaProducer = require("../kafka/KafkaProducer");
+const KafkaProducer = require("./kafka/KafkaProducer");
 const producer = new KafkaProducer("imageResize");
 producer.connect(() => {
   console.log("kafka connected");
@@ -16,7 +16,7 @@ producer.connect(() => {
 
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: "./imageUploads",
+  destination: "/var/image-data/imageUploads",
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
@@ -33,7 +33,7 @@ app.use(morgan("dev"));
 
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://localhost:27017/Team5", {
+  .connect("mongodb://host.docker.internal:27017/Team5", {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

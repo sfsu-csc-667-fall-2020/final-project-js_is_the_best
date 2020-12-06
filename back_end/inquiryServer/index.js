@@ -1,14 +1,14 @@
 const express = require("express");
-const passport = require("../lib/passport/index");
+const passport = require("./lib/passport/index");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const { connectMongoDb } = require("../db/connectDb");
-const Inquiry = require("../db/models/inquiry").model;
-const Message = require("../db/models/message").model;
-const User = require("../db/models/user").model;
-const Listing = require("../db/models/listing");
+const { connectMongoDb } = require("./db/connectDb");
+const Inquiry = require("./db/models/inquiry").model;
+const Message = require("./db/models/message").model;
+const Listing = require("./db/models/listing");
 const redis = require("redis");
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({host: 'redis'});
+// const redisClient = redis.createClient();
 const morgan = require("morgan");
 
 const app = express();

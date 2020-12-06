@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const httpProxy = require("http-proxy");
 
 const app = express();
@@ -6,26 +7,28 @@ const port = 5000;
 
 const apiProxy = httpProxy.createProxyServer();
 
+app.use(cors())
+
 apiProxy.on("error", (error, req, res) => {
-  res.send({ success: false, error: "proxy error" });
+  res.send({ success: false, error: error });
 });
 
 app.all("/auth*", (req, res) => {
-  const options = { target: "http://localhost:5001" };
+  const options = { target: "http://auth:5001" };
   apiProxy.web(req, res, options);
 });
 
 app.all("/inquiry*", (req, res) => {
-  const options = { target: "http://localhost:5002" };
+  const options = { target: "http://inquiry:5002" };
   apiProxy.web(req, res, options);
 });
 app.all("/listing*", (req, res) => {
-  const options = { target: "http://localhost:5003" };
+  const options = { target: "http://listing:5003" };
   apiProxy.web(req, res, options);
 });
 
 app.get("*", (req, res) => {
-  const options = { target: "http://localhost:4000" };
+  const options = { target: "http://frontend:4000" };
   apiProxy.web(req, res, options);
 });
 

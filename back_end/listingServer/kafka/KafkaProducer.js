@@ -9,7 +9,7 @@ class KafkaProducer {
   }
 
   connect(callback) {
-    const client = new Client();
+    const client = new Client({kafkaHost: 'kafka:9092'});
     this.producer = new HighLevelProducer(client);
     callback();
   }

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const connectMongoDb = (dbName) => {
   // mongoose connection
   mongoose
-  .connect(`mongodb://localhost:27017/${dbName}`, {
+  .connect(`mongodb://host.docker.internal:27017/${dbName}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
