@@ -58,8 +58,10 @@ const Profile = () =>{
     return(
     <div style={{marginBottom:'15%'}}>
         {!isLoggedIn && <Redirect to="/Login" />}
-        {isLoggedIn && <div>
-        <Navigationbar />
+        <Redirect from="/" to="/Profile" />
+        {isLoggedIn && 
+        <div> 
+          <Navigationbar />
         <div className="profile-margin">
             <div className="profile-info">
             <label>Name: {user.name}</label>

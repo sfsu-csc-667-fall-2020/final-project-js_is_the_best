@@ -15,7 +15,6 @@ import Listing from "./pages/Listing";
 import { Provider } from "react-redux";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/actions/userActions";
 const axios = require("axios");
