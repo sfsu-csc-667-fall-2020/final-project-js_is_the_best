@@ -1,55 +1,93 @@
 import React from 'react';
 import '../App.css';
-//import Image from 'react-bootstrap/Image';
-import Figure from 'react-bootstrap/Figure';
-import FigureCaption from 'react-bootstrap/FigureCaption'
-import { Row, Col } from 'react-bootstrap';
+import { useState, useEffect, useRef } from "react";
 import Navigationbar from '../components/Navbar/Navigationbar';
+import Footer from '../components/Footer/Footer';
+import {useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
+import ListingCard from "../components/ListingCard/ListingCard.js";
+import Axios from "axios";
 
 const Profile = () =>{
-    return(<div>
-        <Navigationbar />
-        <Row>
-            <Col lg={5}>
-                <Figure>
-                    <Figure.Image className="profile-image" width={200} height={200} roundedCircle alt="profile_photo" src="./placeholder-image.jpg" />
-                </Figure>
-            </Col >
-            <Col lg={7}>
-                <div className="profile-info">
-                <label>Name </label>
-                <br />
-                <label>Email</label>
-                <br />
-                <label>Member Since</label>
-                </div>
-            </Col>
-        </Row>
+
+    const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
+    const [listings, setListings] = useState([]);
+    
+    const ws = useRef(null);
+    const user = useSelector(state => state.userReducer.user);
+
+    useEffect(() => {
+        Axios.post("/listing/getUserListings")
+        .then(res => {
+            if (res.data.success) {
+               setListings(res.data.listings.reverse());
+          }
+        })
+        .catch(err => {});
+    }, []);
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://localhost:5004");
+
+    ws.current.onmessage = e => {
+      const message = JSON.parse(e.data);
+      switch (message.type) {
+        case "newListing":
+          setListings(listings => [message.listing].concat(listings));
+          break;
+        case "ImageProcessDone":
+          setListings(listings => {
+            listings.forEach(listing => {
+              if (message.listing._id === listing._id) {
+                listing.image100Url = message.listing.image100Url;
+                listing.image500Url = message.listing.image500Url;
+              }
+            });
+            return [...listings];
+          });
+          break;
+        default:
+          break;
+      }
+    };
+
+    return () => {
+        ws.current.close();
+      };
+    }, []);
+
+    return(
+    <div style={{marginBottom:'15%'}}>
+        {!isLoggedIn && <Redirect to="/Login" />}
+        {isLoggedIn && 
+        <div> 
+          <Navigationbar />
         <div className="profile-margin">
-            <h3 style={{marginTop: "25px"}}>My Listings</h3>
-                <Row className="profile-margin">
-                    <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
-                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
-                    </Col>
-                    <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
-                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
-                    </Col>
-                    <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
-                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
-                    </Col>
-                    <Col lg={3}>
-                    <Figure><Figure.Image width={150} height={150} src="./placeholder-image.jpg" thumbnail /> 
-                    <FigureCaption style={{textAlign:'center'}}>Title</FigureCaption></ Figure>
-                    </Col>
-                </Row> 
+            <div className="profile-info">
+            <label>Name: {user.name}</label>
+            <br />
+            <label>Email: {user.email}</label>
+            </div>
         </div>
+        <div>
+            <div
+            style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: "3%",
+            marginBottom: "3%",
+            width: '60%'
+            }}
+            >
+                <h3 style={{marginTop: "25px", textAlign:'center'}}>My Listings</h3>
+                  {listings.map((listing, i) => (
+                    <ListingCard key={i} {...listing} />
+                  ))} 
+            </div>
+        </div>
+        <Footer /></div>}
         </div>
     )
 }
 
 export default Profile;
-
-//<Image src="./placeholder-image.png" roundedCircle style={{border:"1px solid black"}}/>

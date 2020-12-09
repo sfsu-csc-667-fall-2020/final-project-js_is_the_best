@@ -1,19 +1,21 @@
 const initState = () => ({
-    userName: '',
+    user:null,
     isLoggedIn: false,
     });
 const userReducer = (state = initState(), action) =>{
     //all actions have a type
     switch(action.type){
-        case 'USER_NAME_SET':
+        case 'LOGIN':
             return {
                 ...state,//copy old state
-                userName: action.userName,
+                isLoggedIn:true,
+                user: action.user,
             };
-        case 'USER_SET_LOGGED_IN':
+        case 'LOGOUT':
             return{
                 ...state,
-                isLoggedIn:action.isLoggedIn,
+                isLoggedIn:false,
+                user: null,
             }
         default:
           return state;

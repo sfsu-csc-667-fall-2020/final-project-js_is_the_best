@@ -103,7 +103,7 @@ input[type=number]{
 
 .profile-margin{
   margin-left: 200px;
-  margin-right: 200px;
+  margin-right:200px;
 }
 .chat-room .friend-list .list-group-item {
   margin-bottom: 0;
@@ -135,4 +135,11 @@ input[type=number]{
 .chat-room .scrollable-chat {
   height: 510px;
   padding-bottom: 15px;
+}
+
+.footer{
+  position:fixed; 
+  left:0px; 
+  bottom:0px; 
+  width:100%; 
 }

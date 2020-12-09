@@ -1,9 +1,8 @@
-export const setUserName = (userName)=> ({
-    type: 'USER_NAME_SET',
-    userName,
+export const loginUser = user => ({
+  type: "LOGIN",
+  user
 });
 
-export const setIsLoggedIn = (isLoggedIn)=>({
-    type: 'USER_SET_LOGGED_IN',
-    isLoggedIn,
+export const logoutUser = () => ({
+  type: "LOGOUT"
 });
