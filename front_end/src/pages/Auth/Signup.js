@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Auth.css';
 import Navigationbar from '../../components/Navbar/Navigationbar';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserName, setIsLoggedIn } from '../../redux/actions/userActions';
 
 function validate(username, email, password, confirmPassword) {
     const errors = [];
@@ -63,7 +65,9 @@ class Signup extends Component {
         e.preventDefault();
          axios.post('/Signup', this.state)
         .then(response => {
-            this.props.history.push('/Login');
+          dispatch(setUserName(this.state.username));
+          dispatch(setIsLoggedIn(true));
+          this.props.history.push('/Login');
         })
         .catch(error => {
             console.log(error)
