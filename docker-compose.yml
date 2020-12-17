@@ -1,5 +1,108 @@
-version: '3'
+version: '3.8'
 services:
+  gateway:
+    image: stevenmchenry01/gateway-team5:latest
+    ports:
+      - "5000:5000"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+    depends_on: 
+      - auth
+      - inquiry
+  websocket:
+    image: stevenmchenry01/websocket-team5:latest
+    ports:
+      - "5004:5004"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+    depends_on: 
+      - redis
+  auth:
+    image: stevenmchenry01/auth-team5:latest
+    ports:
+      - "5001:5001"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+  inquiry:
+    image: stevenmchenry01/inquiry-team5:latest
+    ports:
+      - "5002:5002"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+    depends_on: 
+      - redis
+      - auth
+      - websocket
+  listing:
+    image: stevenmchenry01/listing-team5:latest
+    ports:
+      - "5003:5003"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+    depends_on: 
+      - kafka
+      - zookeeper
+      - redis
+      - auth
+      - websocket
+      - imageProcessor
+    volumes: 
+      - type: volume
+        source: image-data
+        target: /var/image-data
+  imageProcessor:
+    image: stevenmchenry01/imageprocessor-team5:latest
+    ports:
+      - "5010:5010"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+    depends_on: 
+      - kafka
+      - zookeeper
+      - redis
+      - auth
+      - websocket
+    volumes: 
+      - type: volume
+        source: image-data
+        target: /var/image-data
+  frontend:
+    image: stevenmchenry01/frontend-team5:latest
+    ports:
+      - "4000:4000"
+    networks:
+      - webnet
+    deploy:
+      mode: replicated
+      replicas: 2
+  redis:
+    image : redis:5.0.4
+    ports:
+      - "6379:6379"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: redis-server --appendonly yes
+    networks:
+      - webnet
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
@@ -11,10 +114,25 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: "9092"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     networks:
       - webnet
+    depends_on: 
+      - zookeeper
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+volumes:
+  image-data:
 networks:
   webnet:
